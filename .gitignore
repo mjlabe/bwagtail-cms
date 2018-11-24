@@ -263,3 +263,8 @@ publish
 # build script local files
 web/build/buildinfo.properties
 web/build/config/buildinfo.properties
+
+node_modules
+.sass-cache
+bower_components
+
