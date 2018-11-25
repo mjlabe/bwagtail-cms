@@ -1,0 +1,29 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+    {% image value.background_image original as mastimage %}
+
+    <style>
+
+    .masthead {
+        background: -webkit-gradient(linear, left top, left bottom, from(rgba(22, 22, 22, 0.1)), color-stop(75%, rgba(22, 22, 22, 0.5)), to(#161616)), url("{{ mastimage.url }}");
+        background: linear-gradient(to bottom, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%), url("{{ mastimage.url }}");
+    }
+
+    </style>
+
+<!-- Header -->
+    <header class="masthead">
+      <div class="container d-flex h-100 align-items-center">
+        <div class="mx-auto text-center">
+          <h1 class="mx-auto my-0 text-uppercase">{% include_block value.heading %}</h1>
+          <h2 class="text-white-50 mx-auto mt-2 mb-5">{% include_block value.subheading %}</h2>
+{#          <a href="#about" class="btn btn-primary js-scroll-trigger">Get Started</a>#}
+        </div>
+      </div>
+    </header>
+
+{% endblock %}
