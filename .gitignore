@@ -267,4 +267,5 @@ web/build/config/buildinfo.properties
 node_modules
 .sass-cache
 bower_components
+media/
 

@@ -18,12 +18,52 @@ class GrayscaleMastheadBlock(blocks.StructBlock):
     background_image = ImageChooserBlock()
 
     class Meta:
+        app_label = 'grayscale'
         template = 'grayscale/blocks/grayscale_masthead_block.html'
+
+
+class GrayscaleAboutBlock(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    paragraph = blocks.RichTextBlock()
+    image_with_transparent_background = ImageChooserBlock()
+
+    class Meta:
+        app_label = 'grayscale'
+        template = 'grayscale/blocks/grayscale_about_block.html'
+
+
+class GrayscaleFeaturedBlock(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    paragraph = blocks.RichTextBlock()
+    image = ImageChooserBlock()
+
+    class Meta:
+        app_label = 'grayscale'
+        template = 'grayscale/blocks/grayscale_featured_block.html'
+
+
+# class GrayscaleFeaturedRowBlock(blocks.StructBlock):
+#     heading = blocks.CharBlock()
+#     paragraph = blocks.RichTextBlock()
+#     image = ImageChooserBlock()
+#
+#     class Meta:
+#         app_label = 'grayscale'
+#         template = 'grayscale/blocks/grayscale_featured_row_block.html'
+#
+#
+# class GrayscaleFeaturedMultiRowBlock(Page):
+#     featured_multi_row = blocks.StructBlock([
+#         ('featured_row', GrayscaleFeaturedRowBlock()),
+#     ], template='grayscale/blocks/grayscale_featured_multi_row_block.html')
 
 
 class GrayscalePage(Page):
     body = StreamField([
         ('masthead', GrayscaleMastheadBlock()),
+        ('about', GrayscaleAboutBlock()),
+        ('featured', GrayscaleFeaturedBlock()),
+        # ('featured_multi_row', GrayscaleFeaturedMultiRowBlock()),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
     ])
