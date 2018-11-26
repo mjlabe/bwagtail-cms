@@ -13,8 +13,8 @@ from wagtail.images.blocks import ImageChooserBlock
 
 
 class GrayscaleMastheadBlock(blocks.StructBlock):
-    heading = blocks.CharBlock()
-    subheading = blocks.RichTextBlock()
+    heading = blocks.CharBlock(required=False)
+    subheading = blocks.RichTextBlock(required=False)
     background_image = ImageChooserBlock()
 
     class Meta:
@@ -25,7 +25,7 @@ class GrayscaleMastheadBlock(blocks.StructBlock):
 class GrayscaleAboutBlock(blocks.StructBlock):
     heading = blocks.CharBlock()
     paragraph = blocks.RichTextBlock()
-    image_with_transparent_background = ImageChooserBlock()
+    image_with_transparent_background = ImageChooserBlock(required=False)
 
     class Meta:
         app_label = 'grayscale'
@@ -33,8 +33,8 @@ class GrayscaleAboutBlock(blocks.StructBlock):
 
 
 class GrayscaleFeaturedBlock(blocks.StructBlock):
-    heading = blocks.CharBlock()
-    paragraph = blocks.RichTextBlock()
+    heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
     image = ImageChooserBlock()
 
     class Meta:
@@ -42,20 +42,58 @@ class GrayscaleFeaturedBlock(blocks.StructBlock):
         template = 'grayscale/blocks/grayscale_featured_block.html'
 
 
-# class GrayscaleFeaturedRowBlock(blocks.StructBlock):
-#     heading = blocks.CharBlock()
-#     paragraph = blocks.RichTextBlock()
-#     image = ImageChooserBlock()
-#
-#     class Meta:
-#         app_label = 'grayscale'
-#         template = 'grayscale/blocks/grayscale_featured_row_block.html'
-#
-#
-# class GrayscaleFeaturedMultiRowBlock(Page):
-#     featured_multi_row = blocks.StructBlock([
-#         ('featured_row', GrayscaleFeaturedRowBlock()),
-#     ], template='grayscale/blocks/grayscale_featured_multi_row_block.html')
+class GrayscaleLeftRowBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+    image = ImageChooserBlock()
+
+    class Meta:
+        app_label = 'grayscale'
+        template = 'grayscale/blocks/featured_row/grayscale_left_row_block.html'
+        label = 'Feature Row (Image Left)'
+
+
+class GrayscaleRightRowBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+    image = ImageChooserBlock()
+
+    class Meta:
+        app_label = 'grayscale'
+        template = 'grayscale/blocks/featured_row/grayscale_right_row_block.html'
+        label = 'Feature Row (Image Right)'
+
+
+class GrayscaleFeaturedMultiRowBlock(blocks.StructBlock):
+    featured_multi_row = blocks.StreamBlock([
+        ('featured_row_left', GrayscaleLeftRowBlock()),
+        ('featured_row_right', GrayscaleRightRowBlock()),
+    ])
+
+    class Meta:
+        app_label = 'grayscale'
+        template = 'grayscale/blocks/featured_row/grayscale_featured_multi_row_block.html'
+        label = 'Freatured Multi Row'
+
+
+class GrayscaleSignupBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+    background_image = ImageChooserBlock()
+
+    class Meta:
+        app_label = 'grayscale'
+        template = 'grayscale/blocks/grayscale_signup_block.html'
+
+
+class GrayscaleContactBlock(blocks.StructBlock):
+    address = blocks.CharBlock()
+    email = blocks.CharBlock()
+    phone = blocks.CharBlock()
+
+    class Meta:
+        app_label = 'grayscale'
+        template = 'grayscale/blocks/grayscale_contact_block.html'
 
 
 class GrayscalePage(Page):
@@ -63,7 +101,9 @@ class GrayscalePage(Page):
         ('masthead', GrayscaleMastheadBlock()),
         ('about', GrayscaleAboutBlock()),
         ('featured', GrayscaleFeaturedBlock()),
-        # ('featured_multi_row', GrayscaleFeaturedMultiRowBlock()),
+        ('featured_multi_row', GrayscaleFeaturedMultiRowBlock()),
+        ('signup', GrayscaleSignupBlock()),
+        ('contact', GrayscaleContactBlock()),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
     ])
