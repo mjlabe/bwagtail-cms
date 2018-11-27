@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
+    'wagtail.contrib.modeladmin',
 
+    'wagtailmenus',
     'modelcluster',
     'taggit',
 
@@ -80,6 +82,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'wagtailmenus.context_processors.wagtailmenus',
             ],
         },
     },
@@ -97,7 +101,7 @@ DATABASES = {
         'NAME': 'wagtail',
         'USER': 'wagtail',
         'PASSWORD': 'wagtail',
-        'HOST': 'db',  # set in docker-compose.yml
+        'HOST': '127.0.0.1',  # set in docker-compose.yml
         'PORT': 5432  # default postgres port
     }
 }

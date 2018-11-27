@@ -75,7 +75,7 @@ class GrayscaleFeaturedBlock(blocks.StructBlock):
     class Meta:
         app_label = 'grayscale'
         template = 'grayscale/blocks/featured/grayscale_featured_block.html'
-        label = 'Freatured Multi Row'
+        label = 'Featured'
 
 
 class GrayscaleSignupBlock(blocks.StructBlock):
@@ -88,22 +88,45 @@ class GrayscaleSignupBlock(blocks.StructBlock):
         template = 'grayscale/blocks/grayscale_signup_block.html'
 
 
+class GrayscaleContactSocialBlock(blocks.StructBlock):
+    SOCIAL_MEDIA = (
+        ('fab fa-facebook-f', 'Facebook'),
+        ('fab fa-github', 'GitHub'),
+        ('fab fa-gitlab', 'GitLab'),
+        ('fa-instagram', 'Instagram'),
+        ('fab fa-linkedin', 'LinkedIn'),
+        ('fab fa-twitter', 'Twitter'),
+    )
+
+    social_media = blocks.ChoiceBlock(SOCIAL_MEDIA)
+    link = blocks.CharBlock()
+
+    class Meta:
+        app_label = 'grayscale'
+        template = 'grayscale/blocks/grayscale_contact_social_block.html'
+        label = 'Social Media Links'
+
+
 class GrayscaleContactBlock(blocks.StructBlock):
     address = blocks.CharBlock()
     email = blocks.CharBlock()
     phone = blocks.CharBlock()
+    social_media = blocks.StreamBlock([
+        ('social_link', GrayscaleContactSocialBlock(required=False)),
+    ], required=False)
 
     class Meta:
         app_label = 'grayscale'
         template = 'grayscale/blocks/grayscale_contact_block.html'
 
 
+
 class GrayscalePage(Page):
     body = StreamField([
         ('masthead', GrayscaleMastheadBlock()),
         ('about', GrayscaleAboutBlock()),
-        # ('featured', GrayscaleFeaturedBlock()),
-        ('featured_multi_row', GrayscaleFeaturedBlock()),
+        ('featured', GrayscaleFeaturedBlock()),
+        # ('featured_multi_row', GrayscaleFeaturedBlock()),
         ('signup', GrayscaleSignupBlock()),
         ('contact', GrayscaleContactBlock()),
         ('paragraph', blocks.RichTextBlock()),
