@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: './web/Dockerfile'
+    container_name: wag
+    ports:
+     - "8000:8000"
+    command: ["./docker_run.sh"] 
+    depends_on:
+     - db
+  db:
+    build:
+      context: .
+      dockerfile: './db/Dockerfile'
+    container_name: wag_pg
+    ports:
+     - "5432:5432"
+
