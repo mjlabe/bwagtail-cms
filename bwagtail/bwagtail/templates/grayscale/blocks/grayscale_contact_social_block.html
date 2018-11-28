@@ -2,8 +2,23 @@
 
 {% block content %}
 
-          <a href="{% include_block value.link %}" class="mx-2">
-            <i class="{% include_block value.social_media %}"></i>
+          <a href="{{ value.link }}" class="mx-2">
+            <i class="{{ value.social_media }}"></i>
           </a>
+
+{#    {% for b in page.body %}#}
+{#        {% for block in b %}#}
+{#        {% if block.block_type == 'link' %}#}
+{#            <a href="{% include_block block.value %}" class="mx-2">#}
+{#        {% else if block.block_type == 'social_media' %}#}
+{#                <i class="{% include_block block.value %}"></i>#}
+{#            </a>#}
+{#        {% else %}#}
+{#            <section class="block-{{ block.block_type }}">#}
+{#                {% include_block block %}#}
+{#            </section>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+{#    {% endfor %}#}
 
 {% endblock %}

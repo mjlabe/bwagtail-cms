@@ -25,6 +25,62 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'grayscale/css/grayscale.min.css' %} " rel="stylesheet">
 
+      <!-- Hack to fix Wagtail adding extra div in streamfield -->
+      <style>
+        .contact-section .social .block-social_link {
+            text-align: center;
+            height: 3rem;
+            width: 3rem;
+            background: rgba(255,255,255,.1);
+            border-radius: 100%;
+            line-height: 3rem;
+            color: rgba(255,255,255,.3);
+            margin-left: .5rem!important;
+            margin-right: .5rem!important;
+        }
+
+        .contact-section .social a {
+            text-align: unset;
+            height: unset;
+            width: unset;
+            background: none;
+            border-radius: unset;
+            line-height: unset;
+            color: unset;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            {#left: -.125rem;#}
+            z-index: 1000;
+            display: none;
+            float: left;
+            min-width: 100%;
+            padding: .5rem 0;
+            margin: .125rem .125rem .125rem;
+            font-size: 1rem;
+            color: #212529;
+            text-align: left;
+            list-style: none;
+            background: rgba(235, 235, 235, 0.3);
+            background-clip: padding-box;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: .25rem;
+        }
+
+        .dropdown-menu .nav-link {
+            padding-top: 0 !important;
+            padding-right: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        .show > a {
+            background: rgba(235, 235, 235, 0.3);
+        }
+
+    </style>
+
   </head>
 
   <body id="page-top">
