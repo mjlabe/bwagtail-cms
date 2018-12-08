@@ -130,6 +130,7 @@ class BootstrapGrayscalePage(Page):
         ('signup', BootstrapGrayscaleSignupBlock()),
         ('contact', BootstrapGrayscaleContactBlock()),
         ('grid', BootstrapCommonGridRowBlock()),
+        ('pricing', BootstrapCommonPriceRowBlock()),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
     ])

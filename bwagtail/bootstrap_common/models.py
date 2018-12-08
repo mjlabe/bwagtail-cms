@@ -25,7 +25,7 @@ class BootstrapCommon2ColumnBlock(blocks.StructBlock):
     link2 = blocks.PageChooserBlock(required=False)
 
     class Meta:
-        template = 'bootstrap_common/blocks/bootstrap_common_2_column_block.html'
+        template = 'bootstrap_common/blocks/grid/bootstrap_common_2_column_block.html'
         label = '2 Column'
 
 
@@ -46,7 +46,7 @@ class BootstrapCommon3ColumnBlock(blocks.StructBlock):
     link3 = blocks.PageChooserBlock(required=False)
 
     class Meta:
-        template = 'bootstrap_common/blocks/bootstrap_common_3_column_block.html'
+        template = 'bootstrap_common/blocks/grid/bootstrap_common_3_column_block.html'
         label = '3 Column'
 
 
@@ -73,7 +73,7 @@ class BootstrapCommon4ColumnBlock(blocks.StructBlock):
 
 
     class Meta:
-        template = 'bootstrap_common/blocks/bootstrap_common_4_column_block.html'
+        template = 'bootstrap_common/blocks/grid/bootstrap_common_4_column_block.html'
         label = '4 Column'
 
 
@@ -129,7 +129,7 @@ class BootstrapCommon8ColumnBlock(blocks.StructBlock):
     link8 = blocks.PageChooserBlock(required=False)
 
     class Meta:
-        template = 'bootstrap_common/blocks/bootstrap_common_8_column_block.html'
+        template = 'bootstrap_common/blocks/grid/bootstrap_common_8_column_block.html'
         label = '8 Column'
 
 
@@ -143,5 +143,29 @@ class BootstrapCommonGridRowBlock(blocks.StructBlock):
     ])
 
     class Meta:
-        template = 'bootstrap_common/blocks/bootstrap_common_grid_row_block.html'
+        template = 'bootstrap_common/blocks/grid/bootstrap_common_grid_row_block.html'
         label = 'Grid Row'
+
+
+class BootstrapCommonPriceCardBlock(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    paragraph = blocks.RichTextBlock()
+    price = blocks.DecimalBlock()
+    rate = blocks.CharBlock()
+    button_text = blocks.CharBlock()
+
+    class Meta:
+        template = 'bootstrap_common/blocks/pricing/bootstrap_common_price_card_block.html'
+        label = 'Price Card'
+
+
+class BootstrapCommonPriceRowBlock(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    paragraph = blocks.RichTextBlock(required=False)
+    row = blocks.StreamBlock([
+        ('bootstrap_common_price_block', BootstrapCommonPriceCardBlock()),
+    ])
+
+    class Meta:
+        template = 'bootstrap_common/blocks/pricing/bootstrap_common_price_row_block.html'
+        label = 'Pricing Row'
