@@ -46,7 +46,7 @@ class BootstrapCommon3ColumnBlock(blocks.StructBlock):
     link3 = blocks.PageChooserBlock(required=False)
 
     class Meta:
-        template = 'bootstrap_common/blocks/bootstrap_common_2_column_block.html'
+        template = 'bootstrap_common/blocks/bootstrap_common_3_column_block.html'
         label = '3 Column'
 
 
@@ -73,7 +73,7 @@ class BootstrapCommon4ColumnBlock(blocks.StructBlock):
 
 
     class Meta:
-        template = 'bootstrap_common/blocks/bootstrap_common_2_column_block.html'
+        template = 'bootstrap_common/blocks/bootstrap_common_4_column_block.html'
         label = '4 Column'
 
 
@@ -136,12 +136,12 @@ class BootstrapCommon8ColumnBlock(blocks.StructBlock):
 class BootstrapCommonGridRowBlock(blocks.StructBlock):
     row = blocks.StreamBlock([
         ('bootstrap_common_2_column', BootstrapCommon2ColumnBlock()),
-        ('bootstrap_common_3_column', BootstrapCommon4ColumnBlock()),
+        ('bootstrap_common_3_column', BootstrapCommon3ColumnBlock()),
         ('bootstrap_common_4_column', BootstrapCommon4ColumnBlock()),
         # ('bootstrap_common_6_column', BootstrapCommon6ColumnBlock()),
         ('bootstrap_common_8_column', BootstrapCommon8ColumnBlock()),
     ])
 
     class Meta:
-        template = 'bootstrap_common/blocks/featured/grayscale_common_grid_row_block.html'
+        template = 'bootstrap_common/blocks/bootstrap_common_grid_row_block.html'
         label = 'Grid Row'

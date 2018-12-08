@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     # 'person',
     'search',
     'bootstrap_grayscale',
-    'bootstrap_common'
+    # 'bootstrap_common',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

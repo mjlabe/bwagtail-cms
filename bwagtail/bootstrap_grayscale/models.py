@@ -10,7 +10,7 @@ from wagtail.core.fields import StreamField
 from wagtail.core import blocks
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.images.blocks import ImageChooserBlock
-from bwagtail.bootstrap_common.models import *
+from bootstrap_common.models import *
 
 
 class BootstrapGrayscaleMastheadBlock(blocks.StructBlock):
@@ -129,6 +129,7 @@ class BootstrapGrayscalePage(Page):
         # ('featured_multi_row', BootstrapGrayscaleFeaturedBlock()),
         ('signup', BootstrapGrayscaleSignupBlock()),
         ('contact', BootstrapGrayscaleContactBlock()),
+        ('grid', BootstrapCommonGridRowBlock()),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
     ])
