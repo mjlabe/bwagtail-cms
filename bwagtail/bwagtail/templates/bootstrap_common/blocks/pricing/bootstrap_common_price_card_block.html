@@ -1,0 +1,18 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{ value.heading }}</h4>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h1 class="card-title pricing-card-title">${{ value.price }} <small class="text-muted">/ {{ value.rate }}</small></h1>
+            {{ value.paragraph }}
+            <button type="button" class="mt-auto btn btn-lg btn-block btn-outline-primary align-bottom">{{ value.button_text }}</button>
+          </div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+    <style>
+        @media (min-width: 1600px) {
+            .container {
+                max-width: 1400px;
+            }
+        }
+
+        .row h3 {
+            margin-top: .5rem;
+        }
+    </style>
+
+        <div class="projects-section">
+
+            <div class="container">
+
+                {% include_block value.row %}
+
+            </div>
+
+        </div>
+
+{% endblock %}

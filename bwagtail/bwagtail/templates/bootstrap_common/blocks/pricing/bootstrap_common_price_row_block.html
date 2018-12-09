@@ -1,0 +1,32 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+    <style>
+        .card-deck .card {
+            min-width: 220px;
+        }
+    </style>
+
+    <div class="projects-section">
+
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+          <h1 class="display-4">{{ value.heading }}</h1>
+          <div class="lead">{{ value.paragraph }}</div>
+        </div>
+
+        <div class="container">
+            <div class="card-deck mb-3 text-center">
+
+                {% for block in value.row %}
+                    {% include_block block %}
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

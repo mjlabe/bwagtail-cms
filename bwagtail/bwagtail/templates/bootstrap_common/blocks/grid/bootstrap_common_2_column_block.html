@@ -1,0 +1,35 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+    {% image value.image1 fill-200x200 jpegquality-60 as image1 %}
+    {% image value.image2 fill-200x200 jpegquality-60 as image2 %}
+
+    <div class="row text-center text-lg-center">
+        <div class="col-lg-6 col-md-6 my-auto p-5">
+            {% if value.link1 is not None %}
+            <a href="{{ value.link1.url }}" class="d-block mb-4 h-100">
+            {% endif %}
+                {% if value.image1 is not None %}
+                <img class="img-fluid img-thumbnail" src="{{ image1.url }}" alt="">
+                {% endif %}
+                <h3>{{ value.heading1 }}</h3>
+                {{ value.paragraph1 }}
+            </a>
+        </div>
+        <div class="col-lg-6 col-md-6 p-5">
+            {% if value.link2 is not None %}
+            <a href="{{ value.link2.url }}" class="d-block mb-4 h-100">
+            {% endif %}
+                {% if value.image2 is not None %}
+                <img class="img-fluid img-thumbnail" src="{{ image2.url }}" alt="">
+                {% endif %}
+                <h3>{{ value.heading2 }}</h3>
+                {{ value.paragraph2 }}
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

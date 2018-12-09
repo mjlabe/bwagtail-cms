@@ -1,0 +1,115 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% load static %}
+    
+    {% image value.image1 fill-200x200 format-jpeg as image1 %}
+    {% image value.image2 fill-200x200 format-jpeg as image2 %}
+    {% image value.image3 fill-200x200 format-jpeg as image3 %}
+    {% image value.image4 fill-200x200 format-jpeg as image4 %}
+    {% image value.image5 fill-200x200 format-jpeg as image5 %}
+    {% image value.image6 fill-200x200 format-jpeg as image6 %}
+    {% image value.image7 fill-200x200 format-jpeg as image7 %}
+    {% image value.image8 fill-200x200 format-jpeg as image8 %}
+    
+    <div class="row">
+        <div class="col-xl-6 col-lg-12 col-xs-12">
+            <div class="row text-center text-lg-center">
+                <div class="col-lg-3 col-md-6 col-xs-6 p-5">
+                    {% if value.link1 is not None %}
+                    <a href="{{ value.link1.url }}" class="d-block mb-4 h-100">
+                    {% endif %}
+                        {% if value.image1 is not None %}
+                        <img class="img-fluid img-thumbnail" src="{{ image1.url }}" alt="">
+                        {% endif %}
+                        <h3>{{ value.heading1 }}</h3>
+                        {{ value.paragraph1 }}
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 col-xs-6 p-5">
+                    {% if value.link2 is not None %}
+                    <a href="{{ value.link2.url }}" class="d-block mb-4 h-100">
+                    {% endif %}
+                        {% if value.image2 is not None %}
+                        <img class="img-fluid img-thumbnail" src="{{ image2.url }}" alt="">
+                        {% endif %}
+                        <h3>{{ value.heading2 }}</h3>
+                        {{ value.paragraph2 }}
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 col-xs-6 p-5">
+                    {% if value.link3 is not None %}
+                    <a href="{{ value.link3.url }}" class="d-block mb-4 h-100">
+                    {% endif %}
+                        {% if value.image3 is not None %}
+                        <img class="img-fluid img-thumbnail" src="{{ image3.url }}" alt="">
+                        {% endif %}
+                        <h3>{{ value.heading3 }}</h3>
+                        {{ value.paragraph3 }}
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 col-xs-6 p-5">
+                    {% if value.link4 is not None %}
+                    <a href="{{ value.link4.url }}" class="d-block mb-4 h-100">
+                    {% endif %}
+                        {% if value.image4 is not None %}
+                        <img class="img-fluid img-thumbnail" src="{{ image4.url }}" alt="">
+                        {% endif %}
+                        <h3>{{ value.heading4 }}</h3>
+                        {{ value.paragraph4 }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-12 col-xs-12">
+            <div class="row text-center text-lg-center">
+                <div class="col-lg-3 col-md-6 col-xs-6 p-5">
+                    {% if value.link5 is not None %}
+                    <a href="{{ value.link5.url }}" class="d-block mb-4 h-100">
+                    {% endif %}
+                        {% if value.image5 is not None %}
+                        <img class="img-fluid img-thumbnail" src="{{ image5.url }}" alt="">
+                        {% endif %}
+                        <h3>{{ value.heading5 }}</h3>
+                        {{ value.paragraph5 }}
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 col-xs-6 p-5">
+                    {% if value.link6 is not None %}
+                    <a href="{{ value.link6.url }}" class="d-block mb-4 h-100">
+                    {% endif %}
+                        {% if value.image6 is not None %}
+                        <img class="img-fluid img-thumbnail" src="{{ image6.url }}" alt="">
+                        {% endif %}
+                        <h3>{{ value.heading6 }}</h3>
+                        {{ value.paragraph6 }}
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 col-xs-6 p-5">
+                    {% if value.link7 is not None %}
+                    <a href="{{ value.link7.url }}" class="d-block mb-4 h-100">
+                    {% endif %}
+                        {% if value.image7 is not None %}
+                        <img class="img-fluid img-thumbnail" src="{{ image7.url }}" alt="">
+                        {% endif %}
+                        <h3>{{ value.heading7 }}</h3>
+                        {{ value.paragraph7 }}
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 col-xs-6 p-5">
+                    {% if value.link8 is not None %}
+                    <a href="{{ value.link8.url }}" class="d-block mb-4 h-100">
+                    {% endif %}
+                        {% if value.image8 is not None %}
+                        <img class="img-fluid img-thumbnail" src="{{ image8.url }}" alt="">
+                        {% endif %}
+                        <h3>{{ value.heading8 }}</h3>
+                        {{ value.paragraph8 }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
