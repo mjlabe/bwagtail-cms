@@ -169,3 +169,31 @@ class BootstrapCommonPriceRowBlock(blocks.StructBlock):
     class Meta:
         template = 'bootstrap_common/blocks/pricing/bootstrap_common_price_row_block.html'
         label = 'Pricing Row'
+
+
+class BootstrapCommonTextSectionBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+    button_text = blocks.CharBlock(required=False)
+    button_link = blocks.PageChooserBlock(required=False)
+    background_image = ImageChooserBlock(required=False)
+    COLOR_CHOICES = (
+        ('', 'Light'),
+        ('bg-dark text-light', 'Dark'),
+        ('bg-theme, text-theme', 'Theme')
+    )
+    background_color = blocks.ChoiceBlock(choices=COLOR_CHOICES, required=False)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        if value['background_color'] == 'bg-dark text-light':
+            context['value']['btn_color'] = 'btn-secondary'
+        elif value['background_color'] == 'bg-theme, text-theme':
+            context['value']['btn_color'] = 'btn-theme'
+        else:
+            context['value']['btn_color'] = ''
+        return context
+
+    class Meta:
+        template = 'bootstrap_common/blocks/bootstrap_common_text_section_block.html'
+        label = 'Text Section'

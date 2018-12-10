@@ -126,6 +126,7 @@ class BootstrapGrayscalePage(Page):
         ('masthead', BootstrapGrayscaleMastheadBlock()),
         ('about', BootstrapGrayscaleAboutBlock()),
         ('featured', BootstrapGrayscaleFeaturedBlock()),
+        ('text', BootstrapCommonTextSectionBlock()),
         # ('featured_multi_row', BootstrapGrayscaleFeaturedBlock()),
         ('signup', BootstrapGrayscaleSignupBlock()),
         ('contact', BootstrapGrayscaleContactBlock()),

@@ -1,0 +1,21 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+{#    TODO: add image background#}
+{#    TODO: make button if statement so it isn't rendered if text is None#}
+    <section class="{{ value.background_color }} projects-section" id="{{ value.heading.slugify }}">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <h1 class="mb-5">{{ value.heading }}</h1>
+            <div class="mb-5">{{ value.paragraph }}</div>
+            <a class="btn {{ value.btn_color }}" href="{{ value.button_link.url }}">{{ value.button_text }}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}
