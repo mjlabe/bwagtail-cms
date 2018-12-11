@@ -9,7 +9,7 @@
     {% image value.image3 fill-200x200 as image3 %}
 
     <div class="row text-center text-lg-center">
-        <div class="col-md-4 p-5">
+        <div class="col-md-4 p-md-5">
             {% if value.link1 is not None %}
             <a href="{{ value.link1.url }}" class="d-block mb-4 h-100">
             {% endif %}
@@ -20,7 +20,7 @@
                 {{ value.paragraph1 }}
             </a>
         </div>
-        <div class="col-md-4 p-5">
+        <div class="col-md-4 p-md-5">
             {% if value.link2 is not None %}
             <a href="{{ value.link2.url }}" class="d-block mb-4 h-100">
             {% endif %}
@@ -31,7 +31,7 @@
                 {{ value.paragraph2 }}
             </a>
         </div>
-        <div class="col-md-4 p-5">
+        <div class="col-md-4 p-md-5">
             {% if value.link3 is not None %}
             <a href="{{ value.link3.url }}" class="d-block mb-4 h-100">
             {% endif %}
