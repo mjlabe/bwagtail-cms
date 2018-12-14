@@ -184,23 +184,24 @@ class BootstrapCommonTextSectionBlock(blocks.StructBlock):
     COLOR_CHOICES = (
         ('', 'Light'),
         ('bg-dark text-light', 'Dark'),
-        ('bg-primary, text-theme', 'Theme')
+        ('bg-primary text-light', 'Theme')
     )
     background_color = blocks.ChoiceBlock(choices=COLOR_CHOICES, required=False)
+    iframe = blocks.RawHTMLBlock(required=False)
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         if value['background_color'] == 'bg-dark text-light':
             context['value']['btn_color'] = 'btn-secondary'
-        elif value['background_color'] == 'bg-primary, text-theme':
-            context['value']['btn_color'] = 'btn-primary'
+        elif value['background_color'] == 'bg-primary text-light':
+            context['value']['btn_color'] = 'btn-light'
         else:
-            context['value']['btn_color'] = 'btn-dark'
+            context['value']['btn_color'] = 'btn-primary'
         return context
 
     class Meta:
         template = 'bootstrap_common/blocks/bootstrap_common_text_section_block.html'
-        label = 'Text Section'
+        label = 'Section'
 
 
 class BootstrapCommonCarouselBlock(blocks.StructBlock):

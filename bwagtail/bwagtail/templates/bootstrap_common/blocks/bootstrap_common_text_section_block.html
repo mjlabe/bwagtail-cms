@@ -16,12 +16,17 @@
             height: 100%;
             {#min-height: 35rem;#}
             {#padding: 15rem 0;#}
-            background: -webkit-gradient(linear, left top, left bottom, from(rgba(22, 22, 22, 0.1)), color-stop(75%, rgba(22, 22, 22, 0.6)), to(#161616)), url("{{ image.url }}");
-            background: linear-gradient(to bottom, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.6) 75%, #161616 100%), url("{{ image.url }}");
+            {#background: -webkit-gradient(linear, left top, left bottom, from(rgba(22, 22, 22, 0.1)), color-stop(75%, rgba(22, 22, 22, 0.6)), to(#161616)), url("{{ image.url }}");#}
+            {#background: linear-gradient(to bottom, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.6) 75%, #161616 100%), url("{{ image.url }}");#}
+            background-image: url("{{ image.url }}");
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: scroll;
             background-size: cover;
+        }
+
+        .iframe {
+            max-width: 90vh;
         }
 
     </style>
@@ -32,6 +37,11 @@
           <div class="col-lg-8 mx-auto text-center">
             <h1 class="mb-5">{{ value.heading }}</h1>
             <div class="mb-5">{{ value.paragraph }}</div>
+              {% if value.iframe is not None %}
+                  <div class="iframe mt-5 mb-5">
+                    {{ value.iframe }}
+                  </div>
+              {% endif %}
               {% if value.button_text != "" and value.button_link is not None %}
                 <a class="btn {{ value.btn_color }}" href="{{ value.button_link.url }}">{{ value.button_text }}</a>
               {% endif %}

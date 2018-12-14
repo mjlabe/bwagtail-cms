@@ -20,7 +20,7 @@ class BootstrapGrayscaleMastheadBlock(blocks.StructBlock):
     button_text = blocks.CharBlock(required=False)
     button_link = blocks.PageChooserBlock(required=False)
     COLOR_CHOICES = (
-        ('light', 'Light'),
+        ('', 'Light'),
         ('dark', 'Dark'),
         ('theme', 'Theme')
     )
@@ -148,7 +148,7 @@ class BootstrapGrayscalePage(Page):
         ('carousel', BootstrapCommonCarouselBlock()),
         ('about', BootstrapGrayscaleAboutBlock()),
         ('featured', BootstrapGrayscaleFeaturedBlock()),
-        ('text', BootstrapCommonTextSectionBlock()),
+        ('section', BootstrapCommonTextSectionBlock()),
         # ('featured_multi_row', BootstrapGrayscaleFeaturedBlock()),
         ('signup', BootstrapGrayscaleSignupBlock()),
         ('contact', BootstrapGrayscaleContactBlock()),
