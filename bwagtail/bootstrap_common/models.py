@@ -184,7 +184,7 @@ class BootstrapCommonTextSectionBlock(blocks.StructBlock):
     COLOR_CHOICES = (
         ('', 'Light'),
         ('bg-dark text-light', 'Dark'),
-        ('bg-theme, text-theme', 'Theme')
+        ('bg-primary, text-theme', 'Theme')
     )
     background_color = blocks.ChoiceBlock(choices=COLOR_CHOICES, required=False)
 
@@ -192,10 +192,10 @@ class BootstrapCommonTextSectionBlock(blocks.StructBlock):
         context = super().get_context(value, parent_context=parent_context)
         if value['background_color'] == 'bg-dark text-light':
             context['value']['btn_color'] = 'btn-secondary'
-        elif value['background_color'] == 'bg-theme, text-theme':
-            context['value']['btn_color'] = 'btn-theme'
+        elif value['background_color'] == 'bg-primary, text-theme':
+            context['value']['btn_color'] = 'btn-primary'
         else:
-            context['value']['btn_color'] = ''
+            context['value']['btn_color'] = 'btn-dark'
         return context
 
     class Meta:
@@ -204,14 +204,18 @@ class BootstrapCommonTextSectionBlock(blocks.StructBlock):
 
 
 class BootstrapCommonCarouselBlock(blocks.StructBlock):
-    masthead = blocks.BooleanBlock()
+    masthead = blocks.BooleanBlock(required=False)
+    COLOR_CHOICES = (
+        ('light', 'Light'),
+        ('dark', 'Dark'),
+        ('theme', 'Theme')
+    )
     item = blocks.ListBlock(blocks.StructBlock([
         ('heading', blocks.CharBlock(required=False)),
         ('paragraph', blocks.CharBlock(required=False)),
         ('image', ImageChooserBlock()),
-        ('link', blocks.PageChooserBlock(required=False)),
         ('button_text', blocks.CharBlock(required=False)),
-        ('button_link', blocks.PageChooserBlock(required=False))
+        ('button_link', blocks.PageChooserBlock(required=False)),
     ]))
 
     class Meta:
