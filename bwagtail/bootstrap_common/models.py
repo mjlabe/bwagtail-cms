@@ -204,11 +204,14 @@ class BootstrapCommonTextSectionBlock(blocks.StructBlock):
 
 
 class BootstrapCommonCarouselBlock(blocks.StructBlock):
+    masthead = blocks.BooleanBlock()
     item = blocks.ListBlock(blocks.StructBlock([
         ('heading', blocks.CharBlock(required=False)),
         ('paragraph', blocks.CharBlock(required=False)),
         ('image', ImageChooserBlock()),
         ('link', blocks.PageChooserBlock(required=False)),
+        ('button_text', blocks.CharBlock(required=False)),
+        ('button_link', blocks.PageChooserBlock(required=False))
     ]))
 
     class Meta:

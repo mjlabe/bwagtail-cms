@@ -35,25 +35,63 @@
 
 {#{% if blocks %}#}
 
+    <style>
+    .carousel-caption-masthead {
+        position: absolute;
+        right: 15%;
+        bottom: 40%;
+        left: 15%;
+        z-index: 10;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        color: #fff;
+        text-align: center;
+    }
+
+    .display-5 {
+        font-size: 6.5rem;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+    </style>
+
+{#    TODO: fix centering vert#}
+{#    TODO: make link work when clicking picture#}
+
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             {% for block in value.item %}
                     <li data-target="{{ block.heading|slugify }}" data-slide-to="1"></li>
             {% endfor %}
-        </ol>git
+        </ol>
         <div class="carousel-inner">
             {% for block in value.item %}
                 <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
                     {% image block.image original as image %}
                     <img class="d-block w-100" src="{{ image.url }}" alt="{{ forloop.counter }}">
-                    {% if block.heading is not None %}
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>{{ block.heading }}</h5>
+                    {% if value.masthead is True %}
+                        {% if block.heading is not None %}
+                            <div class="carousel-caption-masthead d-none d-md-block">
+                                <h1 class="display-5">{{ block.heading }}</h1>
+                            {% endif %}
+                            {% if block.paragraph is not None %}
+                                <h2>{{ block.paragraph }}</h2>
+                        {% endif %}
+                    {% else %}
+                        {% if block.heading is not None %}
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>{{ block.heading }}</h5>
+                            {% endif %}
+                            {% if block.paragraph is not None %}
+                                {{ block.paragraph }}
+                        {% endif %}
                     {% endif %}
-                    {% if block.paragraph is not None %}
-                        {{ block.paragraph }}
+                    {% if block.button_text is not None and block.button_link is not None %}
+                        <div class="pt-5">
+                            <a class="btn btn-light" href="{{ block.button_link.url }}">{{ block.button_text }}</a>
+                        </div>
                     {% endif %}
-                    </div>
+                            </div>
                 </div>
             {% endfor %}
         </div>
