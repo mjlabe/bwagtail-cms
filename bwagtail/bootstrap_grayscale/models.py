@@ -124,6 +124,7 @@ class BootstrapGrayscaleContactBlock(blocks.StructBlock):
 class BootstrapGrayscalePage(Page):
     body = StreamField([
         ('masthead', BootstrapGrayscaleMastheadBlock()),
+        ('carousel', BootstrapCommonCarouselBlock()),
         ('about', BootstrapGrayscaleAboutBlock()),
         ('featured', BootstrapGrayscaleFeaturedBlock()),
         ('text', BootstrapCommonTextSectionBlock()),

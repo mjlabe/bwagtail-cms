@@ -3,16 +3,20 @@ from django.db import models
 from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, PageChooserPanel
 
 from wagtail.core.models import Page
 from wagtail.core.fields import StreamField
 from wagtail.core import blocks
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.blocks import ImageChooserBlock
 
 
 # TODO: Add font awesome chooser
+from wagtail.images.edit_handlers import ImageChooserPanel
+
+
 class BootstrapCommon2ColumnBlock(blocks.StructBlock):
     heading1 = blocks.CharBlock(required=False)
     paragraph1 = blocks.RichTextBlock(required=False)
@@ -197,3 +201,16 @@ class BootstrapCommonTextSectionBlock(blocks.StructBlock):
     class Meta:
         template = 'bootstrap_common/blocks/bootstrap_common_text_section_block.html'
         label = 'Text Section'
+
+
+class BootstrapCommonCarouselBlock(blocks.StructBlock):
+    item = blocks.ListBlock(blocks.StructBlock([
+        ('heading', blocks.CharBlock(required=False)),
+        ('paragraph', blocks.CharBlock(required=False)),
+        ('image', ImageChooserBlock()),
+        ('link', blocks.PageChooserBlock(required=False)),
+    ]))
+
+    class Meta:
+        template = 'bootstrap_common/blocks/bootstrap_common_carousel_block.html'
+        label = 'Carousel'
