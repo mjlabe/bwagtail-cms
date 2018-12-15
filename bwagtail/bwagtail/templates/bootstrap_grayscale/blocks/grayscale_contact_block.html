@@ -6,6 +6,8 @@
 
     {% image value.background_image original as mastimage %}
 
+{#    TODO: add title and paragraph#}
+
     <!-- Contact Section -->
     <section class="contact-section bg-black">
       <div class="container">
@@ -30,7 +32,7 @@
                 <h4 class="text-uppercase m-0">Email</h4>
                 <hr class="my-4">
                 <div class="small text-black-50">
-                  <a href="#">{% include_block value.email %}</a>
+                  <a href="mailto:{% include_block value.email %}">{% include_block value.email %}</a>
                 </div>
               </div>
             </div>
@@ -42,15 +44,29 @@
                 <i class="fas fa-mobile-alt text-primary mb-2"></i>
                 <h4 class="text-uppercase m-0">Phone</h4>
                 <hr class="my-4">
-                <div class="small text-black-50">{% include_block value.phone %}</div>
+                <div class="small text-black-50">
+                  <a href="tel:+{% include_block value.phone %}">{% include_block value.phone %}</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="social d-flex justify-content-center">
-          {% include_block value.social_media %}
-        </div>
+    <div class="social d-flex justify-content-center">
+
+{#    TODO: fix rendering#}
+
+    {% for block in value.social_media %}
+
+          <a href="{{ block.link }}" class="mx-2">
+                <i class="{{ block.social_media }}"></i>
+          </a>
+
+    {% endfor %}
+
+    </div>
+
+{#          {% include_block value.social_media %}#}
 
       </div>
     </section>

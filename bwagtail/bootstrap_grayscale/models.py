@@ -124,12 +124,23 @@ class BootstrapGrayscaleContactSocialBlock(blocks.StructBlock):
 
 
 class BootstrapGrayscaleContactBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
     address = blocks.CharBlock()
     email = blocks.CharBlock()
     phone = blocks.CharBlock()
-    social_media = blocks.StreamBlock([
-        ('social_link', BootstrapGrayscaleContactSocialBlock(required=False)),
-    ], required=False)
+    SOCIAL_MEDIA = (
+        ('fab fa-facebook-f', 'Facebook'),
+        ('fab fa-github', 'GitHub'),
+        ('fab fa-gitlab', 'GitLab'),
+        ('fa-instagram', 'Instagram'),
+        ('fab fa-linkedin', 'LinkedIn'),
+        ('fab fa-twitter', 'Twitter'),
+    )
+    social_media = blocks.ListBlock(blocks.StructBlock([
+        ('social_media', blocks.ChoiceBlock(SOCIAL_MEDIA)),
+        ('social_link', blocks.URLBlock()),
+    ], required=False))
 
     class Meta:
         app_label = 'bootstrap_grayscale'
@@ -143,7 +154,7 @@ class BootstrapGrayscalePage(Page):
         ('about', BootstrapGrayscaleAboutBlock()),
         ('featured', BootstrapGrayscaleFeaturedBlock()),
         ('section', BootstrapCommonTextSectionBlock()),
-        ('signup', BootstrapGrayscaleSignupBlock()),
+        # ('signup', BootstrapGrayscaleSignupBlock()),      # Not functional on static site
         ('contact', BootstrapGrayscaleContactBlock()),
         ('grid', BootstrapCommonGridRowBlock()),
         ('pricing', BootstrapCommonPriceRowBlock()),

@@ -1,24 +1,15 @@
 {% load wagtailcore_tags wagtailimages_tags %}
-
+{#TODO: delete this#}
 {% block content %}
+    
+    {% for block in value.social_media %}
 
-          <a href="{{ value.link }}" class="mx-2">
-            <i class="{{ value.social_media }}"></i>
+          <a href="{{ block.link }}" class="mx-2 d-flex">
+              <div class="social justify-content-center">
+                <i class="{{ block.social_media }}"></i>
+              </div>
           </a>
-
-{#    {% for b in page.body %}#}
-{#        {% for block in b %}#}
-{#        {% if block.block_type == 'link' %}#}
-{#            <a href="{% include_block block.value %}" class="mx-2">#}
-{#        {% else if block.block_type == 'social_media' %}#}
-{#                <i class="{% include_block block.value %}"></i>#}
-{#            </a>#}
-{#        {% else %}#}
-{#            <section class="block-{{ block.block_type }}">#}
-{#                {% include_block block %}#}
-{#            </section>#}
-{#        {% endif %}#}
-{#    {% endfor %}#}
-{#    {% endfor %}#}
+    
+    {% endfor %}
 
 {% endblock %}
