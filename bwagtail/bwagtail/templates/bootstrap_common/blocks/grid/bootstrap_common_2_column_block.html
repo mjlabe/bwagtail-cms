@@ -8,7 +8,7 @@
     {% image value.image2 fill-200x200 jpegquality-60 as image2 %}
 
     <div class="row text-center text-lg-center">
-        <div class="col-lg-6 col-md-6 my-auto p-5">
+        <div class="col-lg-6 col-md-6 my-auto p-md-5">
             {% if value.link1 is not None %}
             <a href="{{ value.link1.url }}" class="d-block mb-4 h-100">
             {% endif %}
@@ -19,7 +19,7 @@
                 {{ value.paragraph1 }}
             </a>
         </div>
-        <div class="col-lg-6 col-md-6 p-5">
+        <div class="col-lg-6 col-md-6 p-md-5">
             {% if value.link2 is not None %}
             <a href="{{ value.link2.url }}" class="d-block mb-4 h-100">
             {% endif %}

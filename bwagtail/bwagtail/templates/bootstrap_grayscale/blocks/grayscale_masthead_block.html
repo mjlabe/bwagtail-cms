@@ -10,8 +10,6 @@
 
     .masthead {
         position: relative;
-        width: 100%;
-        height: auto;
         min-height: 35rem;
         padding: 15rem 0;
         background: -webkit-gradient(linear, left top, left bottom, from(rgba(22, 22, 22, 0.1)), color-stop(75%, rgba(22, 22, 22, 0.5)), to(#161616)), url("{{ mastimage.url }}");
@@ -22,6 +20,12 @@
         background-size: cover;
     }
 
+    .masthead h1 {#}
+        background: -webkit-linear-gradient({{ value.txt_color }},rgba(255,255,255,0));
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+    }
+
     </style>
 
 <!-- Header -->
@@ -30,7 +34,9 @@
         <div class="mx-auto text-center">
           <h1 class="mx-auto my-0 text-uppercase">{% include_block value.heading %}</h1>
           <h2 class="text-white-50 mx-auto mt-2 mb-5">{% include_block value.subheading %}</h2>
-{#          <a href="#about" class="btn btn-primary js-scroll-trigger">Get Started</a>#}
+          {% if value.button_text != "" and value.button_link is not None %}
+            <a class="btn {{ value.btn_color }} js-scroll-trigger" href="{{ value.button_link.url }}">{{ value.button_text }}</a>
+          {% endif %}
         </div>
       </div>
     </header>

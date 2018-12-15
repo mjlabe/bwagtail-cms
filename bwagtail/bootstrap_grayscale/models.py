@@ -17,6 +17,27 @@ class BootstrapGrayscaleMastheadBlock(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     subheading = blocks.RichTextBlock(required=False)
     background_image = ImageChooserBlock()
+    button_text = blocks.CharBlock(required=False)
+    button_link = blocks.PageChooserBlock(required=False)
+    COLOR_CHOICES = (
+        ('', 'Light'),
+        ('dark', 'Dark'),
+        ('theme', 'Theme')
+    )
+    background_theme = blocks.ChoiceBlock(choices=COLOR_CHOICES, required=False)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        if value['background_theme'] == 'dark':
+            context['value']['btn_color'] = 'btn-light'
+            context['value']['txt_color'] = '#f8f9fa'
+        elif value['background_theme'] == 'theme':
+            context['value']['btn_color'] = 'btn-primary'
+            context['value']['txt_color'] = '#f8f9fa'
+        else:
+            context['value']['btn_color'] = 'btn-dark'
+            context['value']['txt_color'] = '#050505'
+        return context
 
     class Meta:
         app_label = 'bootstrap_grayscale'
@@ -124,8 +145,10 @@ class BootstrapGrayscaleContactBlock(blocks.StructBlock):
 class BootstrapGrayscalePage(Page):
     body = StreamField([
         ('masthead', BootstrapGrayscaleMastheadBlock()),
+        ('carousel', BootstrapCommonCarouselBlock()),
         ('about', BootstrapGrayscaleAboutBlock()),
         ('featured', BootstrapGrayscaleFeaturedBlock()),
+        ('section', BootstrapCommonTextSectionBlock()),
         # ('featured_multi_row', BootstrapGrayscaleFeaturedBlock()),
         ('signup', BootstrapGrayscaleSignupBlock()),
         ('contact', BootstrapGrayscaleContactBlock()),

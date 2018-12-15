@@ -3,16 +3,20 @@ from django.db import models
 from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, PageChooserPanel
 
 from wagtail.core.models import Page
 from wagtail.core.fields import StreamField
 from wagtail.core import blocks
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.blocks import ImageChooserBlock
 
 
 # TODO: Add font awesome chooser
+from wagtail.images.edit_handlers import ImageChooserPanel
+
+
 class BootstrapCommon2ColumnBlock(blocks.StructBlock):
     heading1 = blocks.CharBlock(required=False)
     paragraph1 = blocks.RichTextBlock(required=False)
@@ -169,3 +173,52 @@ class BootstrapCommonPriceRowBlock(blocks.StructBlock):
     class Meta:
         template = 'bootstrap_common/blocks/pricing/bootstrap_common_price_row_block.html'
         label = 'Pricing Row'
+
+
+class BootstrapCommonTextSectionBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+    button_text = blocks.CharBlock(required=False)
+    button_link = blocks.PageChooserBlock(required=False)
+    background_image = ImageChooserBlock(required=False)
+    COLOR_CHOICES = (
+        ('', 'Light'),
+        ('bg-dark text-light', 'Dark'),
+        ('bg-primary text-light', 'Theme')
+    )
+    background_color = blocks.ChoiceBlock(choices=COLOR_CHOICES, required=False)
+    iframe = blocks.RawHTMLBlock(required=False)
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        if value['background_color'] == 'bg-dark text-light':
+            context['value']['btn_color'] = 'btn-secondary'
+        elif value['background_color'] == 'bg-primary text-light':
+            context['value']['btn_color'] = 'btn-light'
+        else:
+            context['value']['btn_color'] = 'btn-primary'
+        return context
+
+    class Meta:
+        template = 'bootstrap_common/blocks/bootstrap_common_text_section_block.html'
+        label = 'Section'
+
+
+class BootstrapCommonCarouselBlock(blocks.StructBlock):
+    masthead = blocks.BooleanBlock(required=False)
+    COLOR_CHOICES = (
+        ('light', 'Light'),
+        ('dark', 'Dark'),
+        ('theme', 'Theme')
+    )
+    item = blocks.ListBlock(blocks.StructBlock([
+        ('heading', blocks.CharBlock(required=False)),
+        ('paragraph', blocks.CharBlock(required=False)),
+        ('image', ImageChooserBlock()),
+        ('button_text', blocks.CharBlock(required=False)),
+        ('button_link', blocks.PageChooserBlock(required=False)),
+    ]))
+
+    class Meta:
+        template = 'bootstrap_common/blocks/bootstrap_common_carousel_block.html'
+        label = 'Carousel'
