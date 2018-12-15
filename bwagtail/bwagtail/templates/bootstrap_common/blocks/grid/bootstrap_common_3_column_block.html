@@ -3,45 +3,49 @@
 {% block content %}
 
     {% load static %}
+    
+    {% for block in value.item %}
 
-    {% image value.image1 fill-200x200 as image1 %}
-    {% image value.image2 fill-200x200 as image2 %}
-    {% image value.image3 fill-200x200 as image3 %}
+    {% image block.image1 fill-200x200 as image1 %}
+    {% image block.image2 fill-200x200 as image2 %}
+    {% image block.image3 fill-200x200 as image3 %}
 
     <div class="row text-center text-lg-center">
         <div class="col-md-4 p-md-5">
-            {% if value.link1 is not None %}
-            <a href="{{ value.link1.url }}" class="d-block mb-4 h-100">
+            {% if block.link1 is not None %}
+            <a href="{{ block.link1.url }}" class="d-block mb-4 h-100">
             {% endif %}
-                {% if value.image1 is not None %}
+                {% if block.image1 is not None %}
                 <img class="img-fluid img-thumbnail" src="{{ image1.url }}" alt="">
                 {% endif %}
-                <h3>{{ value.heading1 }}</h3>
-                {{ value.paragraph1 }}
+                <h3>{{ block.heading1 }}</h3>
+                {{ block.paragraph1 }}
             </a>
         </div>
         <div class="col-md-4 p-md-5">
-            {% if value.link2 is not None %}
-            <a href="{{ value.link2.url }}" class="d-block mb-4 h-100">
+            {% if block.link2 is not None %}
+            <a href="{{ block.link2.url }}" class="d-block mb-4 h-100">
             {% endif %}
-                {% if value.image2 is not None %}
+                {% if block.image2 is not None %}
                 <img class="img-fluid img-thumbnail" src="{{ image2.url }}" alt="">
                 {% endif %}
-                <h3>{{ value.heading2 }}</h3>
-                {{ value.paragraph2 }}
+                <h3>{{ block.heading2 }}</h3>
+                {{ block.paragraph2 }}
             </a>
         </div>
         <div class="col-md-4 p-md-5">
-            {% if value.link3 is not None %}
-            <a href="{{ value.link3.url }}" class="d-block mb-4 h-100">
+            {% if block.link3 is not None %}
+            <a href="{{ block.link3.url }}" class="d-block mb-4 h-100">
             {% endif %}
-                {% if value.image3 is not None %}
+                {% if block.image3 is not None %}
                 <img class="img-fluid img-thumbnail" src="{{ image3.url }}" alt="">
                 {% endif %}
-                <h3>{{ value.heading3 }}</h3>
-                {{ value.paragraph3 }}
+                <h3>{{ block.heading3 }}</h3>
+                {{ block.paragraph3 }}
             </a>
         </div>
     </div>
+
+    {% endfor %}
 
 {% endblock %}

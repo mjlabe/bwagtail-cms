@@ -55,9 +55,12 @@ class BootstrapGrayscaleAboutBlock(blocks.StructBlock):
 
 
 class BootstrapGrayscaleFeaturedLargeRowBlock(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    paragraph = blocks.RichTextBlock(required=False)
-    image = ImageChooserBlock()
+    item = blocks.ListBlock(blocks.StructBlock([
+        ('heading', blocks.CharBlock(required=False)),
+        ('paragraph', blocks.RichTextBlock(required=False)),
+        ('image', ImageChooserBlock()),
+        ('image_position', blocks.ChoiceBlock(choices=(('left', 'Left'), ('right', 'Right'))))
+    ]))
 
     class Meta:
         app_label = 'bootstrap_grayscale'
@@ -65,33 +68,24 @@ class BootstrapGrayscaleFeaturedLargeRowBlock(blocks.StructBlock):
         label = 'Featured Large Row'
 
 
-class BootstrapGrayscaleFeaturedSmallRowLeftBlock(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    paragraph = blocks.RichTextBlock(required=False)
-    image = ImageChooserBlock()
+class BootstrapGrayscaleFeaturedSmallRowBlock(blocks.StructBlock):
+    item = blocks.ListBlock(blocks.StructBlock([
+        ('heading', blocks.CharBlock(required=False)),
+        ('paragraph', blocks.RichTextBlock(required=False)),
+        ('image', ImageChooserBlock()),
+        ('image_position', blocks.ChoiceBlock(choices=(('left', 'Left'), ('right', 'Right'))))
+        ]))
 
     class Meta:
         app_label = 'bootstrap_grayscale'
-        template = 'bootstrap_grayscale/blocks/featured/grayscale_featured_small_row_left_block.html'
-        label = 'Features Small Row (Image Left)'
-
-
-class BootstrapGrayscaleSmallRowRightBlock(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    paragraph = blocks.RichTextBlock(required=False)
-    image = ImageChooserBlock()
-
-    class Meta:
-        app_label = 'bootstrap_grayscale'
-        template = 'bootstrap_grayscale/blocks/featured/grayscale_featured_small_row_right_block.html'
-        label = 'Featured Small Row (Image Right)'
+        template = 'bootstrap_grayscale/blocks/featured/grayscale_featured_small_row_block.html'
+        label = 'Featured Small Row'
 
 
 class BootstrapGrayscaleFeaturedBlock(blocks.StructBlock):
     featured = blocks.StreamBlock([
         ('featured_row_large', BootstrapGrayscaleFeaturedLargeRowBlock()),
-        ('featured_row_left', BootstrapGrayscaleFeaturedSmallRowLeftBlock()),
-        ('featured_row_right', BootstrapGrayscaleSmallRowRightBlock()),
+        ('featured_row', BootstrapGrayscaleFeaturedSmallRowBlock()),
     ])
 
     class Meta:
@@ -149,7 +143,6 @@ class BootstrapGrayscalePage(Page):
         ('about', BootstrapGrayscaleAboutBlock()),
         ('featured', BootstrapGrayscaleFeaturedBlock()),
         ('section', BootstrapCommonTextSectionBlock()),
-        # ('featured_multi_row', BootstrapGrayscaleFeaturedBlock()),
         ('signup', BootstrapGrayscaleSignupBlock()),
         ('contact', BootstrapGrayscaleContactBlock()),
         ('grid', BootstrapCommonGridRowBlock()),
