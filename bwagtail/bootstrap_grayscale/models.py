@@ -104,7 +104,12 @@ class BootstrapGrayscaleSignupBlock(blocks.StructBlock):
         template = 'bootstrap_grayscale/blocks/grayscale_signup_block.html'
 
 
-class BootstrapGrayscaleContactSocialBlock(blocks.StructBlock):
+class BootstrapGrayscaleContactBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+    address = blocks.TextBlock()
+    email = blocks.CharBlock()
+    phone = blocks.CharBlock()
     SOCIAL_MEDIA = (
         ('fab fa-facebook-f', 'Facebook'),
         ('fab fa-github', 'GitHub'),
@@ -113,23 +118,24 @@ class BootstrapGrayscaleContactSocialBlock(blocks.StructBlock):
         ('fab fa-linkedin', 'LinkedIn'),
         ('fab fa-twitter', 'Twitter'),
     )
+    social_media = blocks.ListBlock(blocks.StructBlock([
+        ('social_media', blocks.ChoiceBlock(SOCIAL_MEDIA)),
+        ('social_link', blocks.URLBlock()),
+    ], required=False))
 
-    social_media = blocks.ChoiceBlock(SOCIAL_MEDIA)
-    link = blocks.CharBlock()
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        address_query = value['address']
 
-    class Meta:
-        app_label = 'bootstrap_grayscale'
-        template = 'bootstrap_grayscale/blocks/grayscale_contact_social_block.html'
-        label = 'Social Media Links'
+        # Remove all non-word characters (everything except numbers and letters)
+        import re
+        address_query = re.sub(r"[^\w\s]", '', address_query)
 
+        # Replace all runs of whitespace with a single dash
+        address_query = re.sub(r"\s+", '+', address_query)
 
-class BootstrapGrayscaleContactBlock(blocks.StructBlock):
-    address = blocks.CharBlock()
-    email = blocks.CharBlock()
-    phone = blocks.CharBlock()
-    social_media = blocks.StreamBlock([
-        ('social_link', BootstrapGrayscaleContactSocialBlock(required=False)),
-    ], required=False)
+        context['value']['address_query'] = address_query
+        return context
 
     class Meta:
         app_label = 'bootstrap_grayscale'
@@ -143,7 +149,7 @@ class BootstrapGrayscalePage(Page):
         ('about', BootstrapGrayscaleAboutBlock()),
         ('featured', BootstrapGrayscaleFeaturedBlock()),
         ('section', BootstrapCommonTextSectionBlock()),
-        ('signup', BootstrapGrayscaleSignupBlock()),
+        # ('signup', BootstrapGrayscaleSignupBlock()),      # Not functional on static site
         ('contact', BootstrapGrayscaleContactBlock()),
         ('grid', BootstrapCommonGridRowBlock()),
         ('pricing', BootstrapCommonPriceRowBlock()),
