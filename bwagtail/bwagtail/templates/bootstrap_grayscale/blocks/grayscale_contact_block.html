@@ -20,7 +20,11 @@
                 <i class="fas fa-map-marked-alt text-primary mb-2"></i>
                 <h4 class="text-uppercase m-0">Address</h4>
                 <hr class="my-4">
-                <div class="small text-black-50">{% include_block value.address %}</div>
+                <div class="small text-black-50">
+                    <a href="https://www.google.com/maps/place/{{ value.address_query }}">
+                    {% include_block value.address|linebreaks %}
+                    </a>
+                </div>
               </div>
             </div>
           </div>
@@ -54,11 +58,9 @@
 
     <div class="social d-flex justify-content-center">
 
-{#    TODO: fix rendering#}
-
     {% for block in value.social_media %}
 
-          <a href="{{ block.link }}" class="mx-2">
+          <a href="{{ block.social_link }}" class="mx-2">
                 <i class="{{ block.social_media }}"></i>
           </a>
 
