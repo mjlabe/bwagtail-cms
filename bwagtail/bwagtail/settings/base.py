@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'search',
     'bootstrap_grayscale',
     # 'bootstrap_common',
+    # 'bwagtail',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtail.contrib.modeladmin',
+    'wagtail.contrib.settings',
 
     'wagtailmenus',
     'modelcluster',

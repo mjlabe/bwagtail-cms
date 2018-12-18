@@ -6,9 +6,17 @@
 
     <style>
     .featured-text-right {
-        padding: 0 2rem 0 0;
-        border-right: .5rem solid #64a19d;
+        padding: 2rem;
     }
+
+    @media (min-width: 992px) {
+        .projects-section .featured-text-right {
+            padding: 0 2rem 0 0;
+            border-right: .5rem solid #64a19d;
+        }
+
+    }
+
     </style>
     
     {% for block in value.item %}
@@ -34,14 +42,14 @@
 
         <!-- Featured Project Row right-->
         <div class="row align-items-center no-gutters mb-4 mb-lg-5">
+          <div class="col-xl-8 col-lg-7 order-lg-1">
+            <img class="img-fluid mb-3 mb-lg-0" src="{{ image.url }}" alt="">
+          </div>
           <div class="col-xl-4 col-lg-5">
             <div class="featured-text-right text-center text-lg-left">
               <h4>{% include_block block.heading %}</h4>
               <div class="text-black-50 mb-0">{% include_block block.paragraph %}</div>
             </div>
-          </div>
-          <div class="col-xl-8 col-lg-7">
-            <img class="img-fluid mb-3 mb-lg-0" src="{{ image.url }}" alt="">
           </div>
         </div>
 

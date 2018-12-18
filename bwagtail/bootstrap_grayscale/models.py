@@ -1,15 +1,24 @@
+from django.contrib.auth.admin import UserAdmin
 from django.db import models
+from django.forms import forms
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 
 from wagtail.core import blocks
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 
 from wagtail.core.models import Page
 from wagtail.core.fields import StreamField
 from wagtail.core import blocks
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.snippets.models import register_snippet
+from django.db import models
+from wagtail.contrib.settings.models import BaseSetting, register_setting
+from django import forms
+
 from bootstrap_common.models import *
 
 
@@ -112,11 +121,13 @@ class BootstrapGrayscaleContactBlock(blocks.StructBlock):
     phone = blocks.CharBlock()
     SOCIAL_MEDIA = (
         ('fab fa-facebook-f', 'Facebook'),
-        ('fab fa-github', 'GitHub'),
-        ('fab fa-gitlab', 'GitLab'),
         ('fa-instagram', 'Instagram'),
         ('fab fa-linkedin', 'LinkedIn'),
         ('fab fa-twitter', 'Twitter'),
+        ('fab fa-pinterest', 'Pinterest'),
+        ('fab fa-youtube', 'Youtube'),
+        ('fab fa-github', 'GitHub'),
+        ('fab fa-gitlab', 'GitLab'),
     )
     social_media = blocks.ListBlock(blocks.StructBlock([
         ('social_media', blocks.ChoiceBlock(SOCIAL_MEDIA)),
@@ -162,3 +173,90 @@ class BootstrapGrayscalePage(Page):
     ]
 
     seo_title = 'Bootstrap Grayscale Page'
+
+#
+# class Header(models.Model):
+#     site_settings = ParentalKey('SiteSettings', on_delete=models.CASCADE, related_name='header')
+#     site_name = models.CharField(max_length=50)
+#     site_logo = models.ForeignKey(
+#         'wagtailimages.Image',
+#         null=True,
+#         blank=True,
+#         on_delete=models.SET_NULL,
+#         related_name='+',
+#     )
+#     banner_colour = models.CharField(
+#         max_length=6,
+#         null=True,
+#         blank=True,
+#         help_text="Fill in a hex colour value"
+#     )
+#
+#     panels = [
+#         FieldPanel('site_name'),
+#         ImageChooserPanel('site_logo'),
+#         FieldPanel('banner_colour'),
+#     ]
+
+
+class Footer(Orderable):
+    CONTACT_CHOICES = (
+        ('fas fa-phone', 'Phone'),
+        ('fas fa-envelope', 'Email'),
+        ('fab fa-facebook-f', 'Facebook'),
+        ('fa-instagram', 'Instagram'),
+        ('fab fa-linkedin', 'LinkedIn'),
+        ('fab fa-twitter', 'Twitter'),
+        ('fab fa-pinterest', 'Pinterest'),
+        ('fab fa-youtube', 'Youtube'),
+        ('fab fa-github', 'GitHub'),
+        ('fab fa-gitlab', 'GitLab'),
+    )
+
+    site_settings = ParentalKey('SiteSettings', on_delete=models.CASCADE, related_name='footer')
+    contact_type = models.CharField(choices=CONTACT_CHOICES, max_length=50)
+    contact_info = models.CharField(max_length=50)
+    info_prefix = models.CharField(max_length=10, editable=False)
+
+    def save(self, *args, **kwargs):
+        if self.contact_type == 'Phone':
+            self.info_prefix = 'tel:'
+        elif self.contact_type == 'Email':
+            self.info_prefix = 'mailto:'
+        else:
+            self.info_prefix = ''
+
+        super(Footer, self).save(*args, **kwargs)
+
+    panels = [
+        FieldPanel('contact_type'),
+        FieldPanel('contact_info'),
+    ]
+
+
+@register_setting
+class SiteSettings(BaseSetting, ClusterableModel):
+    site_name = models.CharField(max_length=50)
+    site_logo = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    banner_color = models.CharField(
+        max_length=6,
+        null=True,
+        blank=True,
+        help_text="Fill in a hex colour value"
+    )
+    include_footer = models.BooleanField()
+
+    panels = [
+        FieldPanel('site_name'),
+        ImageChooserPanel('site_logo'),
+        FieldPanel('banner_color'),
+        FieldPanel('include_footer'),
+        InlinePanel('footer', label="Footer",
+                    help_text='Select your contact/social media type and enter the phone number, email, or URL')
+    ]
