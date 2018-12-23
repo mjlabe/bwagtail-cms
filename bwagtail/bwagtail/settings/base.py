@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     # 'person',
     'search',
     'bootstrap_grayscale',
+    'bootstrap_business_casual',
     # 'bootstrap_common',
     # 'bwagtail',
 
