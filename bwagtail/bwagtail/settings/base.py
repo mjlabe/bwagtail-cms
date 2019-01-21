@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'search',
     'bootstrap_grayscale',
     'bootstrap_business_casual',
+    'utils',
     # 'bootstrap_common',
     # 'bwagtail',
 
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.settings',
 
+    # 'bwagtail.wagtailmenus',
     'wagtailmenus',
     'modelcluster',
     'taggit',
@@ -88,6 +90,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'wagtailmenus.context_processors.wagtailmenus',
+                'wagtail.contrib.settings.context_processors.settings',
             ],
         },
     },
