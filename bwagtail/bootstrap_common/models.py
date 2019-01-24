@@ -160,6 +160,7 @@ class BootstrapCommonPriceCardBlock(blocks.StructBlock):
         label = 'Price Card'
 
 
+# TODO: make this a listblock
 class BootstrapCommonPriceRowBlock(blocks.StructBlock):
     heading = blocks.CharBlock()
     paragraph = blocks.RichTextBlock(required=False)
