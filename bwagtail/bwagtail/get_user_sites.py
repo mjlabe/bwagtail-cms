@@ -3,8 +3,10 @@ from django_currentuser.middleware import get_current_user
 from wagtail.core.models import Site
 
 
-def get_user_sites():
-    current_user = get_current_user()
+def get_user_sites(current_user):
+    if current_user.is_superuser:
+        return Site.objects.all()
+
     with connection.cursor() as cursor:
         cursor.execute(
             """
