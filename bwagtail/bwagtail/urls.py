@@ -7,10 +7,18 @@ from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from django.urls import include, path  # For django versions from 2.0 and up
 
+from wag_custom.contrib.settings import views
+from wagtailmenus import views as menu_views
+
 
 # from search import views as search_views
 
 urlpatterns = [
+    # url(r'^admin/wagtailmenus/mainmenu/$', views.edit_current_site, name='edit'),
+    # url(r'^admin/wagtailmenus/mainmenu/edit/(\d+)/$', views.edit, name='edit'),
+    url(r'^admin/settings/settings/sitesettings/$', views.edit_current_site, name='edit'),
+    url(r'^admin/settings/settings/sitesettings/(\d+)/$', views.edit, name='edit'),
+
     url(r'^django-admin/', admin.site.urls),
 
     url(r'^admin/', include(wagtailadmin_urls)),
