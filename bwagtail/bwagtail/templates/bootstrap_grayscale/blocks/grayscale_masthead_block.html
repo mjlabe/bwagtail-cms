@@ -5,6 +5,7 @@
     {% load static %}
 
     {% image value.background_image original as mastimage %}
+    {% image value.heading_image original as heading_image %}
 
     <style>
 
@@ -32,7 +33,11 @@
     <header class="masthead">
       <div class="container d-flex h-100 align-items-center">
         <div class="mx-auto text-center">
-          <h1 class="mx-auto my-0 text-uppercase">{% include_block value.heading %}</h1>
+            {% if heading_image %}
+                <img src="{{ heading_image.url }}" style="height: 50vh">
+            {% else %}
+                <h1 class="mx-auto my-0 text-uppercase">{% include_block value.heading %}</h1>
+            {% endif %}
           <h2 class="text-white-50 mx-auto mt-2 mb-5">{% include_block value.subheading %}</h2>
           {% if value.button_text != "" and value.button_link is not None %}
             <a class="btn {{ value.btn_color }} js-scroll-trigger" href="{{ value.button_link.url }}">{{ value.button_text }}</a>

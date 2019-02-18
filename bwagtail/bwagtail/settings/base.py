@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'bootstrap_business_casual',
     # 'bootstrap_common',
     # 'bwagtail',
-    'wag_custom.contrib.settings',
+    'wag_custom',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -61,7 +61,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

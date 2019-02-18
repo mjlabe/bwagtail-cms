@@ -24,6 +24,7 @@ from bootstrap_common.models import *
 
 class BootstrapGrayscaleMastheadBlock(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
+    heading_image = ImageChooserBlock(required=False)
     subheading = blocks.RichTextBlock(required=False)
     background_image = ImageChooserBlock()
     button_text = blocks.CharBlock(required=False)

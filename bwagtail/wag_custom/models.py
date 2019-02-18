@@ -1,28 +1,26 @@
-from django import forms
+import os
+
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
 from wagtail.core.models import Page, Orderable
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
-from wagtail.core import hooks
 
 from wagtail.contrib.settings.models import BaseSetting
 from wagtail.contrib.settings.registry import SettingMenuItem, register_setting
 
 from django.db import models
-from wagtail.images.edit_handlers import ImageChooserPanel
+
 from django.contrib.auth.models import Group
 from wagtail.contrib.modeladmin.options import ModelAdmin
 
 from django.apps import apps
 from django.contrib.auth.models import Permission
 
-from wagtail.core import hooks
-from wagtail.core.models import Site
+from wagtail.core.models import Site, Page
 from wagtailmenus.views import SiteSwitchForm
 import wagtailmenus
 
-import bwagtail
 
 from django.contrib.auth.models import User
 
@@ -65,13 +63,9 @@ class Footer(Orderable):
 @register_setting
 class SiteSettings(BaseSetting, ClusterableModel):
     site_name = models.CharField(max_length=50)
-    site_logo = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
+    # TODO: make custom folder for site
+    # TODO: validate file
+    site_logo = models.FileField(blank=True, null=True)
     banner_color = models.CharField(
         max_length=6,
         null=True,
@@ -82,7 +76,7 @@ class SiteSettings(BaseSetting, ClusterableModel):
 
     panels = [
         FieldPanel('site_name'),
-        ImageChooserPanel('site_logo'),
+        FieldPanel('site_logo'),
         FieldPanel('banner_color'),
         FieldPanel('include_footer'),
         InlinePanel('footer', label="Footer",

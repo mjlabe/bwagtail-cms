@@ -2,10 +2,15 @@
 
 {% load menu_tags %}
 
+{% load wagtailsettings_tags %}
+
+{% get_settings %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,19 +25,19 @@
     <!-- Custom fonts for this template -->
     <link href="{% static 'grayscale/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{% static 'grayscale/css/grayscale.min.css' %} " rel="stylesheet">
 
-      <!-- Hack to fix Wagtail adding extra div in streamfield -->
-      <style>
+    <!-- Hack to fix Wagtail adding extra div in streamfield -->
+    <style>
 
         .dropdown-menu {
             position: absolute;
             top: 100%;
-            {#left: -.125rem;#}
-            z-index: 1000;
+        {#left: -.125rem;#} z-index: 1000;
             display: none;
             float: left;
             min-width: 100%;
@@ -44,7 +49,7 @@
             list-style: none;
             background: rgba(235, 235, 235, 0.3);
             background-clip: padding-box;
-            border: 1px solid rgba(0,0,0,.15);
+            border: 1px solid rgba(0, 0, 0, .15);
             border-radius: .25rem;
         }
 
@@ -73,7 +78,7 @@
                 padding: 5rem 0;
             }
 
-        .p-md-5 {
+            .p-md-5 {
                 padding: 1rem;
             }
         }
@@ -86,49 +91,69 @@
             background-color: #29423d;
         }
 
+        #mainNav .navbar-toggler {
+            font-size: 150%;
+            border: none;
+        }
+
+        #mainNav .navbar-brand {
+            padding: 0;
+        }
+
     </style>
 
-  </head>
+</head>
 
-  <body id="page-top">
+<body id="page-top">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="/">{{ request.site.site_name }}</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="fas fa-bars"></i>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        {% with settings.wag_custom.SiteSettings.site_logo.url as logo %}
+        {% with settings.wag_custom.SiteSettings.site_name as name %}
+        {% if settings.sitesettings.SiteSettings.site_logo.url != "" %}
+            <a class="navbar-brand js-scroll-trigger" href="/">
+                <img src="{{ logo }}" style="max-height: 45px;">
+            </a>
+        {% else %}
+            <a class="navbar-brand js-scroll-trigger" href="/">{{ request.site.site_name }}</a>
+        {% endif %}
+        {% endwith %}
+        {% endwith %}
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             {% main_menu template="bootstrap_grayscale/menus/main_menu_dropdown.html" %}
         </div>
-      </div>
-    </nav>
+    </div>
+</nav>
 
-    {% wagtailuserbar %}
+{% wagtailuserbar %}
 
-        {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
-        {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/bwagtail.js' %}"></script>
+{# Global javascript #}
+<script type="text/javascript" src="{% static 'js/bwagtail.js' %}"></script>
 
-        {% block extra_js %}
-            {# Override this in templates to add extra javascript #}
-        {% endblock %}
+{% block extra_js %}
+    {# Override this in templates to add extra javascript #}
+{% endblock %}
 
 
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="{% static 'grayscale/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'grayscale/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'grayscale/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'grayscale/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 {#    <!-- Plugin JavaScript -->#}
-    <script src="{% static 'grayscale/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'grayscale/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
-    <!-- Custom scripts for this template -->
-    <script src="{% static 'grayscale/js/grayscale.min.js' %}"></script>
+<!-- Custom scripts for this template -->
+<script src="{% static 'grayscale/js/grayscale.min.js' %}"></script>
 
-  </body>
+</body>
 
 </html>
