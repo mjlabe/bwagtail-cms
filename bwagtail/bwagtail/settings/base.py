@@ -107,9 +107,9 @@ WSGI_APPLICATION = 'bwagtail.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'wagtail',
-        'USER': 'wagtail',
-        'PASSWORD': 'wagtail',
+        'NAME': 'brc',
+        'USER': 'brc',
+        'PASSWORD': 'flaBRC123!',
         'HOST': '127.0.0.1',  # set in docker-compose.yml
         'PORT': 5432  # default postgres port
     }
