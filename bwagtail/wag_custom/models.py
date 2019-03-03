@@ -20,7 +20,7 @@ from django.contrib.auth.models import Permission
 from wagtail.core.models import Site, Page
 from wagtailmenus.views import SiteSwitchForm
 import wagtailmenus
-
+from wagtail.images.edit_handlers import ImageChooserPanel
 
 from django.contrib.auth.models import User
 
@@ -62,10 +62,17 @@ class Footer(Orderable):
 
 @register_setting
 class SiteSettings(BaseSetting, ClusterableModel):
-    site_name = models.CharField(max_length=50)
+    site_name = models.CharField(max_length=50, blank=True, null=True)
     # TODO: make custom folder for site
     # TODO: validate file
-    site_logo = models.FileField(blank=True, null=True)
+    # site_logo = models.FileField(blank=True, null=True)
+    site_logo = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
     banner_color = models.CharField(
         max_length=6,
         null=True,
@@ -78,7 +85,7 @@ class SiteSettings(BaseSetting, ClusterableModel):
 
     panels = [
         FieldPanel('site_name'),
-        FieldPanel('site_logo'),
+        ImageChooserPanel('site_logo'),
         FieldPanel('banner_color'),
         FieldPanel('google_analytics_id'),
         FieldPanel('include_footer'),
