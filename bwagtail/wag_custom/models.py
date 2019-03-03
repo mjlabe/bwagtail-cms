@@ -20,7 +20,6 @@ from django.contrib.auth.models import Permission
 from wagtail.core.models import Site, Page
 from wagtailmenus.views import SiteSwitchForm
 import wagtailmenus
-from wagtail.images.blocks import ImageChooserBlock
 
 
 from django.contrib.auth.models import User
@@ -66,7 +65,7 @@ class SiteSettings(BaseSetting, ClusterableModel):
     site_name = models.CharField(max_length=50)
     # TODO: make custom folder for site
     # TODO: validate file
-    site_logo = ImageChooserBlock(required=False)
+    site_logo = models.FileField(blank=True, null=True)
     banner_color = models.CharField(
         max_length=6,
         null=True,
