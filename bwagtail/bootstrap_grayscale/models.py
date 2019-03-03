@@ -117,12 +117,12 @@ class BootstrapGrayscaleSignupBlock(blocks.StructBlock):
 class BootstrapGrayscaleContactBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     paragraph = blocks.RichTextBlock(required=False)
-    address = blocks.TextBlock()
+    address = blocks.TextBlock(required=False)
     email = blocks.CharBlock()
     phone = blocks.CharBlock()
     SOCIAL_MEDIA = (
         ('fab fa-facebook-f', 'Facebook'),
-        ('fa-instagram', 'Instagram'),
+        ('fab fa-instagram', 'Instagram'),
         ('fab fa-linkedin', 'LinkedIn'),
         ('fab fa-twitter', 'Twitter'),
         ('fab fa-pinterest', 'Pinterest'),

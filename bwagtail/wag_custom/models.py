@@ -30,7 +30,7 @@ class Footer(Orderable):
         ('fas fa-phone', 'Phone'),
         ('fas fa-envelope', 'Email'),
         ('fab fa-facebook-f', 'Facebook'),
-        ('fa-instagram', 'Instagram'),
+        ('fab fa-instagram', 'Instagram'),
         ('fab fa-linkedin', 'LinkedIn'),
         ('fab fa-twitter', 'Twitter'),
         ('fab fa-pinterest', 'Pinterest'),
@@ -72,12 +72,15 @@ class SiteSettings(BaseSetting, ClusterableModel):
         blank=True,
         help_text="Fill in a hex colour value"
     )
+    google_analytics_id = models.CharField(max_length=50, blank=True, null=True,
+                                           help_text='Google Analytics Tracking ID')
     include_footer = models.BooleanField(null=True)
 
     panels = [
         FieldPanel('site_name'),
         FieldPanel('site_logo'),
         FieldPanel('banner_color'),
+        FieldPanel('google_analytics_id'),
         FieldPanel('include_footer'),
         InlinePanel('footer', label="Footer",
                     help_text='Select your contact/social media type and enter the phone number, email, or URL')
