@@ -20,6 +20,7 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 from django import forms
 
 from bootstrap_common.models import *
+from bootstrap_blog.models import *
 
 
 class BootstrapGrayscaleMastheadBlock(blocks.StructBlock):
@@ -174,6 +175,14 @@ class BootstrapGrayscalePage(Page):
     ]
 
     seo_title = 'Bootstrap Grayscale Page'
+
+
+class BootstrapGrayscaleBlogPage(BootstrapBlogPage):
+    template = 'bootstrap_grayscale/bootstrap_grayscale_blog_page.html'
+
+
+class BootstrapGrayscalePostPage(BootstrapPostPage):
+    template = 'bootstrap_grayscale/bootstrap_grayscale_post_page.html'
 
 #
 # class Header(models.Model):

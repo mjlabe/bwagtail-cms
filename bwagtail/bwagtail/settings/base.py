@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     # 'bootstrap_common',
     # 'bwagtail',
     'wag_custom',
+    'bootstrap_blog',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

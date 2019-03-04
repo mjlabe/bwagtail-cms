@@ -1,0 +1,16 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    <style>
+
+
+    </style>
+
+    {% load static %}
+
+    {% for post in page.get_children %}
+        <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+    {% endfor %}
+
+{% endblock %}
