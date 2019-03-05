@@ -8,21 +8,21 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 
 
 class BootstrapBlogPage(Page):
-    # header_image = models.ForeignKey(
-    #     'wagtailimages.Image',
-    #     null=True,
-    #     blank=True,
-    #     on_delete=models.SET_NULL,
-    #     related_name='+'
-    # )
-    # description = models.CharField(max_length=255, blank=True, )
+    header_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    subtitle = models.CharField(max_length=255, blank=True, )
 
-    content_panels = Page.content_panels
+    # content_panels = Page.content_panels
 
-    # content_panels = Page.content_panels + [
-    #     ImageChooserPanel('header_image'),
-    #     FieldPanel('description')
-    # ]
+    content_panels = Page.content_panels + [
+        ImageChooserPanel('header_image'),
+        FieldPanel('subtitle')
+    ]
 
     class Meta:
         abstract = True
@@ -36,12 +36,12 @@ class BootstrapPostPage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    summary = models.CharField(max_length=100, help_text='Shown on Blog/News index page.')
     body = RichTextField(blank=True)
-    created_data = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
 
     content_panels = Page.content_panels + [
         ImageChooserPanel('header_image', classname="full"),
+        FieldPanel('summary', classname="full"),
         FieldPanel('body', classname="full"),
     ]
 
