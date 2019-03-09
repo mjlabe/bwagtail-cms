@@ -6,33 +6,6 @@
 
 {% load static %}
 
-<style>
-
-    #mainNav {
-        background-color: #fff;
-        border-bottom: 1px solid lightgrey;
-    }
-
-    @media (min-width: 992px) {
-      #mainNav .navbar-brand {
-        padding: .5rem 0;
-        color: rgba(255, 255, 255, 0.5);
-      }
-      #mainNav .nav-link {
-        color: #161616;
-        padding: 1.5rem 1.5rem 1.25rem;
-        border-bottom: 0.25rem solid transparent;
-      }
-      #mainNav .nav-link:hover {
-        color: #64a19d;
-      }
-      #mainNav .nav-link:active {
-        color: #467370;
-      }
-    }
-
-</style>
-
 
 <head>
 
@@ -49,40 +22,152 @@
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
   <!-- Custom styles for this template -->
-  <link href="{% static 'blog/css/clean-blog.css' %}" rel="stylesheet">
+{#  <link href="{% static 'blog/css/clean-blog.css' %}" rel="stylesheet">#}
 
 </head>
 
-<body>
+<style>
+
+    #mainNav {
+        background-color: #fff;
+        border-bottom: 1px solid lightgrey;
+    }
+
+    @media (min-width: 992px) {
+        .container {
+            max-width: 800px;
+        }
+        .container-list {
+            padding-top: 8rem;
+        }
+        #mainNav .navbar-brand {
+            padding: .5rem 0;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        #mainNav .nav-link {
+            padding: 1.5rem 1.5rem 1.25rem;
+            border-bottom: 0.25rem solid transparent;
+        }
+        #mainNav .nav-link:hover {
+            color: #64a19d;
+        }
+        #mainNav .nav-link:active {
+            color: #467370;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 400;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .container-list {
+            padding-top: 5rem;
+        }
+        .post-preview {
+            max-width: 100px;
+            max-height: 100px;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        p {
+            font-size: 12px;
+        }
+    }
+
+    .post {
+        display: flex;
+    }
+
+    .post img {
+        display: block;
+        margin-right: 1rem;
+    }
+
+    .post-featured {
+        width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: black;
+    }
+
+    p {
+        color: grey;
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+    }
+</style>
 
   <!-- Main Content -->
-  <div class="container" style="padding-top: 10rem">
+  <div class="container container-list">
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
+      <div class="col-lg-8 col-md-10">
         {% for post in page.get_children %}
-            <div class="post-preview">
-              <a href="{% pageurl post %}">
-                {% if post.specific.header_image %}
-                    {% image post.specific.header_image fill-200x200 as image %}
-                    <img src="{{ image.url }}">
-                {% endif %}
-                <h2 class="post-title">
-                  {{ post.title }}
-                </h2>
-                <h3 class="post-subtitle">
-                  {{ post.specific.summary }}
-                </h3>
-              </a>
-              <p class="post-meta">Posted by
-                {{ post.owner }}
-                on {{ post.first_published_at }}</p>
-            </div>
-        <hr>
+            {% if post.specific.featured %}
+
+                <div>
+                  <a href="{% pageurl post %}">
+                    {% if post.specific.header_image %}
+                        {% image post.specific.header_image fill-600x300 as image %}
+                        <img src="{{ image.url }}" class="post-featured">
+                    {% endif %}
+                    <div class="pt-2">
+                        <h2 class="post-title">
+                          {{ post.title }}
+                        </h2>
+                        <h3 class="post-subtitle">
+                          {{ post.specific.summary }}
+                        </h3>
+                    </div>
+                    <p class="post-meta">{{ post.owner.first_name }} {{ post.owner.last_name }} &bull; {{ post.first_published_at }}</p>
+                  </a>
+                </div>
+                <hr>
+
+            {% else %}
+
+                  <a href="{% pageurl post %}">
+                    <div class="post">
+                        {% if post.specific.header_image %}
+                            {% image post.specific.header_image fill-200x200 as image %}
+                            <img src="{{ image.url }}" class="post-preview">
+                        {% endif %}
+                        <div>
+                            <h2 class="post-title">
+                              {{ post.title }}
+                            </h2>
+                            <h3 class="post-subtitle">
+                              {{ post.specific.summary }}
+                            </h3>
+                        </div>
+                    </div>
+                    <p class="post-meta">{{ post.owner.first_name }} {{ post.owner.last_name }} &bull; {{ post.first_published_at }}</p>
+                  </a>
+                </div>
+                </div>
+                <hr>
+
+            {% endif %}
         {% endfor %}
 
         <!-- Pager -->
         <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+          <a class="btn btn-primary float-right mb-5" href="#">Older Posts &rarr;</a>
         </div>
       </div>
     </div>
