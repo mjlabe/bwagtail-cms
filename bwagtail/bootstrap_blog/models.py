@@ -5,6 +5,7 @@ from wagtail.core.models import Page
 from wagtail.core.models import Page
 # TODO: Add font awesome chooser
 from wagtail.images.edit_handlers import ImageChooserPanel
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class BootstrapPostPage(Page):

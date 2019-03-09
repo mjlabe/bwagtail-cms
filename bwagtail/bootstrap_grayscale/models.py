@@ -164,6 +164,30 @@ class BootstrapGrayscaleBlogPage(BootstrapBlogPage):
     template = 'bootstrap_grayscale/bootstrap_grayscale_blog_page.html'
     subpage_types = ['BootstrapGrayscalePostPage']
 
+    def get_context(self, request, *args, **kwargs):
+        context = super(BootstrapGrayscaleBlogPage, self).get_context(request)
+
+        # Get the full unpaginated listing of resource pages as a queryset -
+        # replace this with your own query as appropriate
+        all_resources = BootstrapGrayscalePostPage.objects.live().order_by('-first_published_at')
+
+        paginator = Paginator(all_resources, 10) # Show 10 resources per page
+
+        page = request.GET.get('page')
+        try:
+            resources = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            resources = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            resources = paginator.page(paginator.num_pages)
+
+        # make the variable 'resources' available on the template
+        context['resources'] = resources
+
+        return context
+
 
 class BootstrapGrayscalePage(Page):
     body = StreamField([
