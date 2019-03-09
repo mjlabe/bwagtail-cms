@@ -8,12 +8,17 @@
     <footer class="bg-black small text-center text-white-50">
         <div class="social d-flex justify-content-center">
 
-        {% for block in value.contact %}
+        {% for block in value.social %}
 
-              <a href="{{ block.info_prefix }}{{ block.contact_info }}" class="mx-2">
-                    <i class="{{ block.contact_type }}"></i>
-              </a>
-
+            {% if block.social_type == 'Phone' or 'Email' %}
+                <a href="{{ block.info_prefix }}{{ block.id_handle_contact }}" class="mx-2">
+                    <i class="{{ block.social_type }}"></i>
+                </a>
+            {% else %}
+                <a href="{{ block.info_prefix }}{{ block.social_url }}" class="mx-2">
+                    <i class="{{ block.social_type }}"></i>
+                </a>
+            {% endif %}
         {% endfor %}
 
         </div>

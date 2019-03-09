@@ -25,7 +25,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from django.contrib.auth.models import User
 
 
-class Footer(Orderable):
+class Social(Orderable):
     CONTACT_CHOICES = (
         ('fas fa-phone', 'Phone'),
         ('fas fa-envelope', 'Email'),
@@ -39,25 +39,35 @@ class Footer(Orderable):
         ('fab fa-gitlab', 'GitLab'),
     )
 
-    site_settings = ParentalKey('SiteSettings', on_delete=models.CASCADE, related_name='footer', null=True)
-    contact_type = models.CharField(choices=CONTACT_CHOICES, max_length=50)
-    contact_info = models.CharField(max_length=50)
+    site_settings = ParentalKey('SiteSettings', on_delete=models.CASCADE, related_name='social', null=True)
+    social_type = models.CharField(choices=CONTACT_CHOICES, max_length=50)
+    id_handle_contact = models.CharField(max_length=50, help_text='Link, phone number, or address')
     info_prefix = models.CharField(max_length=10, editable=False)
+    social_url = models.CharField(max_length=50, editable=False)
 
     def save(self, *args, **kwargs):
-        if self.contact_type == 'Phone':
+        if self.social_type == 'Phone':
             self.info_prefix = 'tel:'
-        elif self.contact_type == 'Email':
+        elif self.social_type == 'Email':
             self.info_prefix = 'mailto:'
         else:
             self.info_prefix = ''
 
-        super(Footer, self).save(*args, **kwargs)
+        self.social_url = 'www.{site}.com/{id_handle}'.format(site=self.get_social_type_display().lower(),
+                                                              id_handle=self.id_handle_contact)
+
+        super(Social, self).save(*args, **kwargs)
 
     panels = [
-        FieldPanel('contact_type'),
-        FieldPanel('contact_info'),
+        FieldPanel('social_type'),
+        FieldPanel('id_handle_contact'),
     ]
+
+    def social_handle(self):
+        if self.social_type != 'Phone' or 'Email':
+            return self.id_handle_contact
+        else:
+            return ''
 
 
 @register_setting
@@ -89,6 +99,6 @@ class SiteSettings(BaseSetting, ClusterableModel):
         FieldPanel('banner_color'),
         FieldPanel('google_analytics_id'),
         FieldPanel('include_footer'),
-        InlinePanel('footer', label="Footer",
+        InlinePanel('social', label="Social",
                     help_text='Select your contact/social media type and enter the phone number, email, or URL')
     ]

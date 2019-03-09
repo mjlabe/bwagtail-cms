@@ -43,6 +43,12 @@
         margin: 2rem 0 2rem 0;
     }
 
+    .author {
+        font-size: 14px;
+        margin-bottom: 0;
+        line-height: 1;
+    }
+
 </style>
 
     <div class="page-header">
@@ -53,7 +59,37 @@
             </h3>
         {% endif %}
         <hr>
-        <p class="post-meta">Posted by {{ page.owner }} on {{ page.first_published_at }}</p>
+        <div class="row no-gutters">
+            <div class="col-6">
+                <p class="author">{{ page.owner.first_name }} {{ page.owner.last_name }}</p>
+                <p class="author">{{ page.first_published_at }}</p>
+            </div>
+            <div class="col-6 social text-right">
+
+                <span class="fa-stack fa-1x">
+                    <i class="fas fa-circle fa-stack-2x" style="color: #3b5998"></i>
+                    <a href="" id="facebookShareLink">
+                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                    </a>
+                </span>
+
+                <span class="fa-stack fa-1x">
+                    <i class="fas fa-circle fa-stack-2x" style="color: #1da1f2"></i>
+                    <a href="https://twitter.com/share?url={{ page.full_url|urlencode:'' }}&text={{ page.title|urlencode:"" }}">
+                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                    </a>
+                </span>
+
+                <span class="fa-stack fa-1x">
+                    <i class="fas fa-circle fa-stack-2x" style="color: #ff4500"></i>
+                    <a href="http://www.reddit.com/submit?url={{ page.full_url|urlencode:'' }}&title={{ page.title_url|urlencode:'' }}">
+                        <i class="fab fa-reddit fa-stack-1x fa-inverse"></i>
+                    </a>
+                </span>
+
+            </div>
+
+        </div>
         <hr>
         {% if page.header_image %}
             {% image page.header_image original as image %}
@@ -63,5 +99,17 @@
     </div>
 
     {{ page.body|richtext }}
+
+{% endblock %}
+
+    {% block extra_js %}
+
+    <script>
+        $("#facebookShareLink").on("click",function(){
+            var fbpopup = window.open("https://www.facebook.com/sharer/sharer.php?u={{ page.full_url|urlencode:'' }}", "pop", "width=600, height=400, scrollbars=no");
+            console.log('fb');
+            return false;
+        });
+    </script>
 
 {% endblock %}

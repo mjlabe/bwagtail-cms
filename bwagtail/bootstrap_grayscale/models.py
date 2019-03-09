@@ -53,6 +53,7 @@ class BootstrapGrayscaleMastheadBlock(blocks.StructBlock):
     class Meta:
         app_label = 'bootstrap_grayscale'
         template = 'bootstrap_grayscale/blocks/grayscale_masthead_block.html'
+        icon = 'title'
 
 
 class BootstrapGrayscaleAboutBlock(blocks.StructBlock):

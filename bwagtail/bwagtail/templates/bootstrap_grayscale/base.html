@@ -33,6 +33,8 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'grayscale/css/grayscale.min.css' %} " rel="stylesheet">
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
     <!-- Hack to fix Wagtail adding extra div in streamfield -->
     <style>
 
@@ -171,12 +173,6 @@
 {# Global javascript #}
 <script type="text/javascript" src="{% static 'js/bwagtail.js' %}"></script>
 
-{% block extra_js %}
-    {# Override this in templates to add extra javascript #}
-{% endblock %}
-
-
-
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'grayscale/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'grayscale/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -186,6 +182,10 @@
 
 <!-- Custom scripts for this template -->
 <script src="{% static 'grayscale/js/grayscale.min.js' %}"></script>
+
+{% block extra_js %}
+    {# Override this in templates to add extra javascript #}
+{% endblock %}
 
 </body>
 
