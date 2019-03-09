@@ -93,13 +93,27 @@
             background-color: #29423d;
         }
 
+        .navbar {
+            padding: 0 1rem;
+        }
+
         #mainNav .navbar-toggler {
             font-size: 150%;
             border: none;
         }
 
         #mainNav .navbar-brand {
-            padding: 0;
+            padding: 0.5rem;
+        }
+
+        #mainNav.navbar-shrink {
+            border-bottom: 1px solid lightgrey
+        }
+
+        @media (max-width: 991px) {
+            #mainNav {
+                border-bottom: 1px solid lightgrey;
+            }
         }
 
     </style>
@@ -130,7 +144,7 @@
 
         {% if site_logo %}
                 <a class="navbar-brand js-scroll-trigger" href="/">
-                    <img src="{{ site_logo.url }}" style="max-height: 45px;">
+                    <img src="{{ site_logo.url }}" style="max-height: 40px;">
                 </a>
         {% elif settings.wag_custom.SiteSettings.site_name %}
             {% with settings.wag_custom.SiteSettings.site_name as name %}

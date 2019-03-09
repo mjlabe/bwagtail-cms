@@ -155,6 +155,15 @@ class BootstrapGrayscaleContactBlock(blocks.StructBlock):
         template = 'bootstrap_grayscale/blocks/grayscale_contact_block.html'
 
 
+class BootstrapGrayscalePostPage(BootstrapPostPage):
+    template = 'bootstrap_grayscale/bootstrap_grayscale_post_page.html'
+
+
+class BootstrapGrayscaleBlogPage(BootstrapBlogPage):
+    template = 'bootstrap_grayscale/bootstrap_grayscale_blog_page.html'
+    subpage_types = ['BootstrapGrayscalePostPage']
+
+
 class BootstrapGrayscalePage(Page):
     body = StreamField([
         ('masthead', BootstrapGrayscaleMastheadBlock()),
@@ -166,9 +175,11 @@ class BootstrapGrayscalePage(Page):
         ('contact', BootstrapGrayscaleContactBlock()),
         ('grid', BootstrapCommonGridRowBlock()),
         ('pricing', BootstrapCommonPriceRowBlock()),
-        ('paragraph', blocks.RichTextBlock()),
+        ('body', AlignedParagraphBlock()),
+        # ('body', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
     ])
+    show_in_menus_default = True
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('body'),
@@ -176,97 +187,4 @@ class BootstrapGrayscalePage(Page):
 
     seo_title = 'Bootstrap Grayscale Page'
 
-
-class BootstrapGrayscaleBlogPage(BootstrapBlogPage):
-    template = 'bootstrap_grayscale/bootstrap_grayscale_blog_page.html'
-
-
-class BootstrapGrayscalePostPage(BootstrapPostPage):
-    template = 'bootstrap_grayscale/bootstrap_grayscale_post_page.html'
-
-#
-# class Header(models.Model):
-#     site_settings = ParentalKey('SiteSettings', on_delete=models.CASCADE, related_name='header')
-#     site_name = models.CharField(max_length=50)
-#     site_logo = models.ForeignKey(
-#         'wagtailimages.Image',
-#         null=True,
-#         blank=True,
-#         on_delete=models.SET_NULL,
-#         related_name='+',
-#     )
-#     banner_colour = models.CharField(
-#         max_length=6,
-#         null=True,
-#         blank=True,
-#         help_text="Fill in a hex colour value"
-#     )
-#
-#     panels = [
-#         FieldPanel('site_name'),
-#         ImageChooserPanel('site_logo'),
-#         FieldPanel('banner_colour'),
-#     ]
-
-#
-# class Footer(Orderable):
-#     CONTACT_CHOICES = (
-#         ('fas fa-phone', 'Phone'),
-#         ('fas fa-envelope', 'Email'),
-#         ('fab fa-facebook-f', 'Facebook'),
-#         ('fa-instagram', 'Instagram'),
-#         ('fab fa-linkedin', 'LinkedIn'),
-#         ('fab fa-twitter', 'Twitter'),
-#         ('fab fa-pinterest', 'Pinterest'),
-#         ('fab fa-youtube', 'Youtube'),
-#         ('fab fa-github', 'GitHub'),
-#         ('fab fa-gitlab', 'GitLab'),
-#     )
-#
-#     site_settings = ParentalKey('SiteSettings', on_delete=models.CASCADE, related_name='footer')
-#     contact_type = models.CharField(choices=CONTACT_CHOICES, max_length=50)
-#     contact_info = models.CharField(max_length=50)
-#     info_prefix = models.CharField(max_length=10, editable=False)
-#
-#     def save(self, *args, **kwargs):
-#         if self.contact_type == 'Phone':
-#             self.info_prefix = 'tel:'
-#         elif self.contact_type == 'Email':
-#             self.info_prefix = 'mailto:'
-#         else:
-#             self.info_prefix = ''
-#
-#         super(Footer, self).save(*args, **kwargs)
-#
-#     panels = [
-#         FieldPanel('contact_type'),
-#         FieldPanel('contact_info'),
-#     ]
-#
-#
-# @register_setting
-# class SiteSettings(BaseSetting, ClusterableModel):
-#     site_name = models.CharField(max_length=50)
-#     site_logo = models.ForeignKey(
-#         'wagtailimages.Image',
-#         null=True,
-#         blank=True,
-#         on_delete=models.SET_NULL,
-#         related_name='+',
-#     )
-#     banner_color = models.CharField(
-#         max_length=6,
-#         null=True,
-#         blank=True,
-#         help_text="Fill in a hex colour value"
-#     )
-#     include_footer = models.BooleanField()
-#
-#     panels = [
-#         FieldPanel('site_name'),
-#         ImageChooserPanel('site_logo'),
-#         FieldPanel('banner_color'),
-#         FieldPanel('include_footer'),
-#         InlinePanel('footer', label="Footer",
-#                     help_text='Select your contact/social media type and enter the phone number, email, or URL')
-#     ]
+    subpage_types = ['BootstrapGrayscalePage', 'BootstrapGrayscaleBlogPage']

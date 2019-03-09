@@ -220,3 +220,12 @@ class BootstrapCommonCarouselBlock(blocks.StructBlock):
     class Meta:
         template = 'bootstrap_common/blocks/bootstrap_common_carousel_block.html'
         label = 'Carousel'
+
+
+class AlignedParagraphBlock(blocks.StructBlock):
+    alignment = blocks.ChoiceBlock([('text-center', 'Center'), ('text-justify', 'Justify'), ('text-left', 'Left'),
+                                    ('text-right', 'Right')], default='text-center')
+    paragraph = blocks.RichTextBlock()
+
+    class Meta:
+        template = 'bootstrap_common/blocks/bootstrap_common_paragraph.html'

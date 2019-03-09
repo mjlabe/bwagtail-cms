@@ -1,37 +1,67 @@
 {% extends "bootstrap_grayscale/base.html" %}
 
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
 
-    {% load static %}
+{% load static %}
 
-    <style>
+<style>
 
-    .masthead {
-        position: relative;
-        height: 100vh;
-        padding: 15rem 0;
-        background: -webkit-gradient(linear, left top, left bottom, from(rgba(22, 22, 22, 0.1)), color-stop(75%, rgba(22, 22, 22, 0.5)), to(#161616)), url("{{ mastimage.url }}");
-        background: linear-gradient(to bottom, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%), url("{{ mastimage.url }}");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: scroll;
-        background-size: cover;
+    #mainNav {
+        background-color: #fff;
+        border-bottom: 1px solid lightgrey;
     }
 
-    .masthead h1 {
-        background: -webkit-linear-gradient({{ value.txt_color }},rgba(255,255,255,0));
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
+    @media (min-width: 992px) {
+      #mainNav .navbar-brand {
+        padding: .5rem 0;
+        color: rgba(255, 255, 255, 0.5);
+      }
+      #mainNav .nav-link {
+        color: #161616;
+        padding: 1.5rem 1.5rem 1.25rem;
+        border-bottom: 0.25rem solid transparent;
+      }
+      #mainNav .nav-link:hover {
+        color: #64a19d;
+      }
+      #mainNav .nav-link:active {
+        color: #467370;
+      }
     }
 
-    </style>
+    .rich-text, .page-header {
+        padding: 1rem;
+        max-width: 1000px;
+        margin: auto;
+    }
 
-    <h1>{{ page.title }}</h1>
+    .rich-text img {
+        width: 100%;
+        height: unset;
+        margin: 2rem 0 2rem 0;
+    }
+
+</style>
+
+    <div class="page-header">
+        <h1 style="padding-top: 8rem; font-weight: 800;" class="text-center mb-5">{{ page.title }}</h1>
+        {% if page.summary %}
+            <h3 class="text-center mb-5">
+                {{ page.summary }}
+            </h3>
+        {% endif %}
+        <hr>
+        <p class="post-meta">Posted by {{ page.owner }} on {{ page.first_published_at }}</p>
+        <hr>
+        {% if page.header_image %}
+            {% image page.header_image original as image %}
+            <img src="{{ image.url }}" style="width: 100%">
+        {% endif %}
+        <hr>
+    </div>
 
     {{ page.body|richtext }}
-
-    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
 
 {% endblock %}
