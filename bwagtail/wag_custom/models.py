@@ -91,6 +91,10 @@ class SiteSettings(BaseSetting, ClusterableModel):
     )
     google_analytics_id = models.CharField(max_length=50, blank=True, null=True,
                                            help_text='Google Analytics Tracking ID')
+
+    disqus_shortname = models.CharField(max_length=50, blank=True, null=True,
+                                        help_text='Disqus site shortname for comments')
+
     include_footer = models.BooleanField(null=True)
 
     panels = [
@@ -98,6 +102,7 @@ class SiteSettings(BaseSetting, ClusterableModel):
         ImageChooserPanel('site_logo'),
         FieldPanel('banner_color'),
         FieldPanel('google_analytics_id'),
+        FieldPanel('disqus_shortname'),
         FieldPanel('include_footer'),
         InlinePanel('social', label="Social",
                     help_text='Select your contact/social media type and enter the phone number, email, or URL')

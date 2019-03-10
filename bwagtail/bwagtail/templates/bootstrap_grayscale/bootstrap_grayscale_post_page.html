@@ -58,6 +58,10 @@
         line-height: 1;
     }
 
+    .btn-primary {
+        color: white !important;
+    }
+
 </style>
 
     <div class="page-header">
@@ -109,6 +113,18 @@
 
     {{ page.body|richtext }}
 
+{% if settings.wag_custom.sitesettings.disqus_shortname %}
+
+    <div class="container text-center mt-5" style="margin-bottom: 5rem" id="load_comments">
+        <a class="btn btn-primary btn-xl sr-button" onclick="loadDisqus(); return false;">
+        Load Comments
+        </a>
+    </div>
+
+    <div id="disqus_thread"></div>
+
+{% endif %}
+
 {% endblock %}
 
     {% block extra_js %}
@@ -120,5 +136,39 @@
             return false;
         });
     </script>
+
+    {% if settings.wag_custom.sitesettings.disqus_shortname %}
+        {% with settings.wag_custom.sitesettings.disqus_shortname as disqus_shortname %}
+
+        <script>
+
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            var disqus_config = function () {
+                this.page.url = '{{ page.full_url }}';
+                this.page.identifier = '{{ page.title }} - {{ page.id }}';
+                this.page.title = '{{ page.title }}';
+            };
+
+            function loadDisqus() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://{{ disqus_shortname }}.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                document.getElementById('load_comments').style.visibility = "hidden";
+                setTimeout(function (){document.getElementById('load_comments').remove()}, 1000);
+                setTimeout(function () {
+                    var elmnt = document.getElementById("disqus_thread");
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $("#disqus_thread").offset().top
+                    }, 1000);
+                }, 2000);
+            }
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        {% endwith %}
+    {% endif %}
 
 {% endblock %}

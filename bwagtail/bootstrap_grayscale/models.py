@@ -169,9 +169,10 @@ class BootstrapGrayscaleBlogPage(BootstrapBlogPage):
 
         # Get the full unpaginated listing of resource pages as a queryset -
         # replace this with your own query as appropriate
-        all_resources = BootstrapGrayscalePostPage.objects.live().order_by('-first_published_at')
+        # limit to 1000 resources
+        all_resources = BootstrapGrayscalePostPage.objects.live().order_by('-first_published_at')[:1000]
 
-        paginator = Paginator(all_resources, 10) # Show 10 resources per page
+        paginator = Paginator(all_resources, 10)  # Show 10 resources per page
 
         page = request.GET.get('page')
         try:
