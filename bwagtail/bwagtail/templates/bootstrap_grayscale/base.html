@@ -183,6 +183,19 @@
 <!-- Custom scripts for this template -->
 <script src="{% static 'grayscale/js/grayscale.min.js' %}"></script>
 
+{% if settings.wag_custom.SiteSettings.google_analytics_id %}
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ settings.wag_custom.SiteSettings.google_analytics_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '{{ settings.wag_custom.SiteSettings.google_analytics_id }}');
+    </script>
+{% endif %}
+
+
 {% block extra_js %}
     {# Override this in templates to add extra javascript #}
 {% endblock %}
