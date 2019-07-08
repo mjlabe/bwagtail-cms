@@ -4,9 +4,6 @@
 
     {% load static %}
 
-    {% image value.background_image original as mastimage %}
-    {% image value.heading_image original as heading_image %}
-
     <style>
 
     .masthead {
@@ -29,21 +26,22 @@
 
     </style>
 
-<!-- Header -->
+    {% image value.header_image original as heading_image %}
+
+    <!-- Header -->
     <header class="masthead">
       <div class="container d-flex h-100 align-items-center">
         <div class="mx-auto text-center">
-            {% if heading_image %}
-                <img src="{{ heading_image.url }}" style="height: 50vh">
-            {% else %}
-                <h1 class="mx-auto my-0 text-uppercase">{% include_block value.heading %}</h1>
-            {% endif %}
-          <h2 class="text-white-50 mx-auto mt-2 mb-5">{% include_block value.subheading %}</h2>
-          {% if value.button_text != "" and value.button_link is not None %}
-            <a class="btn {{ value.btn_color }} js-scroll-trigger" href="{{ value.button_link.url }}">{{ value.button_text }}</a>
-          {% endif %}
+          <img src="{{ heading_image.url }}" style="height: 50vh">
+          <h1 class="mx-auto my-0 text-uppercase">{% include_block value.title %}</h1>
         </div>
       </div>
     </header>
+
+    <h1>{{ page.title }}</h1>
+
+    {{ page.body|richtext }}
+
+    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
 
 {% endblock %}

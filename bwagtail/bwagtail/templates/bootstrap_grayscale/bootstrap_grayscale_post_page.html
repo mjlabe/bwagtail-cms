@@ -1,0 +1,174 @@
+{% extends "bootstrap_grayscale/base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+
+    #mainNav {
+        background-color: #fff;
+        border-bottom: 1px solid lightgrey;
+    }
+
+    .post-heading {
+      padding-top: 5rem;
+        margin-bottom: 1rem;
+    }
+
+    @media (min-width: 992px) {
+      #mainNav .navbar-brand {
+        padding: .5rem 0;
+        color: rgba(255, 255, 255, 0.5);
+      }
+      #mainNav .nav-link {
+        color: #161616;
+        padding: 1.5rem 1.5rem 1.25rem;
+        border-bottom: 0.25rem solid transparent;
+      }
+      #mainNav .nav-link:hover {
+        color: #64a19d;
+      }
+      #mainNav .nav-link:active {
+        color: #467370;
+      }
+      .post-heading {
+          padding-top: 8rem;
+          margin-bottom: 3rem;
+      }
+    }
+
+    .rich-text, .page-header, .comments {
+        padding: 1rem;
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    .rich-text img {
+        width: 100%;
+        height: unset;
+        margin: 2rem 0 2rem 0;
+    }
+
+    .author {
+        font-size: 14px;
+        margin-bottom: 0;
+        line-height: 1;
+    }
+
+    .btn-primary {
+        color: white !important;
+    }
+
+</style>
+
+    <div class="page-header">
+        <h1 style="font-weight: 800;" class="post-heading text-center">{{ page.title }}</h1>
+        {% if page.summary %}
+            <h3 class="text-center mb-5">
+                {{ page.summary }}
+            </h3>
+        {% endif %}
+        <hr>
+        <div class="row no-gutters">
+            <div class="col-6">
+                <p class="author">{{ page.owner.first_name }} {{ page.owner.last_name }}</p>
+                <p class="author">{{ page.first_published_at }}</p>
+            </div>
+            <div class="col-6 social text-right">
+
+                <span class="fa-stack fa-1x">
+                    <i class="fas fa-circle fa-stack-2x" style="color: #3b5998"></i>
+                    <a href="" id="facebookShareLink">
+                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                    </a>
+                </span>
+
+                <span class="fa-stack fa-1x">
+                    <i class="fas fa-circle fa-stack-2x" style="color: #1da1f2"></i>
+                    <a href="https://twitter.com/share?url={{ page.full_url|urlencode:'' }}&text={{ page.title|urlencode:"" }}">
+                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                    </a>
+                </span>
+
+                <span class="fa-stack fa-1x">
+                    <i class="fas fa-circle fa-stack-2x" style="color: #ff4500"></i>
+                    <a href="http://www.reddit.com/submit?url={{ page.full_url|urlencode:'' }}&title={{ page.title_url|urlencode:'' }}">
+                        <i class="fab fa-reddit fa-stack-1x fa-inverse"></i>
+                    </a>
+                </span>
+
+            </div>
+
+        </div>
+        <hr>
+        {% if page.header_image %}
+            {% image page.header_image original as image %}
+            <img src="{{ image.url }}" style="width: 100%">
+        {% endif %}
+        <hr>
+    </div>
+
+    {{ page.body|richtext }}
+
+{% if settings.wag_custom.sitesettings.disqus_shortname %}
+
+    <div class="container text-center mt-5" style="margin-bottom: 5rem" id="load_comments">
+        <a class="btn btn-primary btn-xl sr-button" onclick="loadDisqus(); return false;">
+        Load Comments
+        </a>
+    </div>
+
+    <div id="disqus_thread" class="comments"></div>
+
+{% endif %}
+
+{% endblock %}
+
+    {% block extra_js %}
+
+    <script>
+        $("#facebookShareLink").on("click",function(){
+            var fbpopup = window.open("https://www.facebook.com/sharer/sharer.php?u={{ page.full_url|urlencode:'' }}", "pop", "width=600, height=400, scrollbars=no");
+            console.log('fb');
+            return false;
+        });
+    </script>
+
+    {% if settings.wag_custom.sitesettings.disqus_shortname %}
+        {% with settings.wag_custom.sitesettings.disqus_shortname as disqus_shortname %}
+
+        <script>
+
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            var disqus_config = function () {
+                this.page.url = '{{ page.full_url }}';
+                this.page.identifier = '{{ page.title }} - {{ page.id }}';
+                this.page.title = '{{ page.title }}';
+            };
+
+            function loadDisqus() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://{{ disqus_shortname }}.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                document.getElementById('load_comments').style.visibility = "hidden";
+                setTimeout(function (){document.getElementById('load_comments').remove()}, 1000);
+                setTimeout(function () {
+                    var elmnt = document.getElementById("disqus_thread");
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $("#disqus_thread").offset().top
+                    }, 1000);
+                }, 2000);
+            }
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        {% endwith %}
+    {% endif %}
+
+{% endblock %}

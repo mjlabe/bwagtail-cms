@@ -33,6 +33,7 @@ class BootstrapCommon2ColumnBlock(blocks.StructBlock):
     class Meta:
         template = 'bootstrap_common/blocks/grid/bootstrap_common_2_column_block.html'
         label = '2 Column'
+        icon = 'grip'
 
 
 class BootstrapCommon3ColumnBlock(blocks.StructBlock):
@@ -56,6 +57,7 @@ class BootstrapCommon3ColumnBlock(blocks.StructBlock):
     class Meta:
         template = 'bootstrap_common/blocks/grid/bootstrap_common_3_column_block.html'
         label = '3 Column'
+        icon = 'grip'
 
 
 class BootstrapCommon4ColumnBlock(blocks.StructBlock):
@@ -84,6 +86,7 @@ class BootstrapCommon4ColumnBlock(blocks.StructBlock):
     class Meta:
         template = 'bootstrap_common/blocks/grid/bootstrap_common_4_column_block.html'
         label = '4 Column'
+        icon = 'grip'
 
 
 class BootstrapCommon8ColumnBlock(blocks.StructBlock):
@@ -132,6 +135,7 @@ class BootstrapCommon8ColumnBlock(blocks.StructBlock):
     class Meta:
         template = 'bootstrap_common/blocks/grid/bootstrap_common_8_column_block.html'
         label = '8 Column'
+        icon = 'grip'
 
 
 class BootstrapCommonGridRowBlock(blocks.StructBlock):
@@ -146,6 +150,7 @@ class BootstrapCommonGridRowBlock(blocks.StructBlock):
     class Meta:
         template = 'bootstrap_common/blocks/grid/bootstrap_common_grid_row_block.html'
         label = 'Grid Row'
+        icon = 'grip'
 
 
 class BootstrapCommonPriceCardBlock(blocks.StructBlock):
@@ -220,3 +225,14 @@ class BootstrapCommonCarouselBlock(blocks.StructBlock):
     class Meta:
         template = 'bootstrap_common/blocks/bootstrap_common_carousel_block.html'
         label = 'Carousel'
+        icon = 'image'
+
+
+class AlignedParagraphBlock(blocks.StructBlock):
+    alignment = blocks.ChoiceBlock([('text-center', 'Center'), ('text-justify', 'Justify'), ('text-left', 'Left'),
+                                    ('text-right', 'Right')], default='text-center')
+    paragraph = blocks.RichTextBlock()
+
+    class Meta:
+        template = 'bootstrap_common/blocks/bootstrap_common_paragraph.html'
+        icon = 'doc-full'

@@ -1,0 +1,197 @@
+{% extends "bootstrap_grayscale/base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>{{ page.title }}</title>
+
+        <!-- Custom fonts for this template -->
+        {#  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">#}
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+              type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+              rel='stylesheet' type='text/css'>
+
+        <!-- Custom styles for this template -->
+        {#  <link href="{% static 'blog/css/clean-blog.css' %}" rel="stylesheet">#}
+
+    </head>
+
+    <style>
+
+        #mainNav {
+            background-color: #fff;
+            border-bottom: 1px solid lightgrey;
+        }
+
+        @media (min-width: 992px) {
+
+            .container-list {
+                padding-top: 8rem;
+                max-width: 800px;
+            }
+
+            #mainNav .navbar-brand {
+                padding: .5rem 0;
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+            #mainNav .nav-link {
+                padding: 1.5rem 1.5rem 1.25rem;
+                border-bottom: 0.25rem solid transparent;
+                color: black;
+            }
+
+            #mainNav .nav-link:hover {
+                color: #64a19d;
+            }
+
+            #mainNav .nav-link:active {
+                color: #467370;
+            }
+
+            .post-title {
+                font-size: 2rem;
+                font-weight: 600;
+            }
+
+            .post-subtitle {
+                font-size: 1.25rem;
+                font-weight: 400;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .container-list {
+                padding-top: 5rem;
+            }
+
+            .post-preview {
+                max-width: 100px;
+                max-height: 100px;
+            }
+
+            .post-title {
+                font-size: 20px;
+                font-weight: 600;
+            }
+
+            .post-subtitle {
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+            p {
+                font-size: 12px;
+            }
+        }
+
+        .post {
+            display: flex;
+        }
+
+        .post img {
+            display: block;
+            margin-right: 1rem;
+        }
+
+        .post-featured {
+            width: 100% !important;
+            overflow: hidden !important;
+        }
+
+        .post-title, .post-subtitle {
+            color: black;
+        }
+
+        .post-meta {
+            color: grey;
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+        }
+    </style>
+
+    <!-- Main Content -->
+    <div class="container container-list">
+        <div class="row">
+            <div class="col">
+                {% for post in resources %}
+                    {% if post.specific.featured %}
+
+                        <div>
+                            <a href="{% pageurl post %}">
+                                {% if post.specific.header_image %}
+                                    {% image post.specific.header_image fill-600x300 as image %}
+                                    <img src="{{ image.url }}" class="post-featured">
+                                {% endif %}
+                                <div class="pt-2">
+                                    <h2 class="post-title">
+                                        {{ post.title }}
+                                    </h2>
+                                    <h3 class="post-subtitle">
+                                        {{ post.specific.summary }}
+                                    </h3>
+                                </div>
+                                <p class="post-meta">{{ post.owner.first_name }} {{ post.owner.last_name }}
+                                    &bull; {{ post.first_published_at }}</p>
+                            </a>
+                        </div>
+                        <hr>
+
+                    {% else %}
+
+                        <a href="{% pageurl post %}">
+                            <div class="post">
+                                {% if post.specific.header_image %}
+                                    {% image post.specific.header_image fill-200x200 as image %}
+                                    <img src="{{ image.url }}" class="post-preview">
+                                {% endif %}
+                                <div>
+                                    <h2 class="post-title">
+                                        {{ post.title }}
+                                    </h2>
+                                    <h3 class="post-subtitle">
+                                        {{ post.specific.summary }}
+                                    </h3>
+                                </div>
+                            </div>
+                            <p class="post-meta">{{ post.owner.first_name }} {{ post.owner.last_name }}
+                                &bull; {{ post.first_published_at }}</p>
+                        </a>
+                        <hr>
+
+                    {% endif %}
+                {% endfor %}
+                <!-- Pager -->
+                {% if resources.has_previous %}
+                    <div class="clearfix">
+                        <a class="btn btn-primary float-left mt-5 mb-5" href="?page={{ resources.previous_page_number }}">
+                            <i class="fas fa-arrow-left" style="font-size: 20px; vertical-align: middle;"></i>
+                            <span>Newer </span>
+                        </a>
+                    </div>
+                {% endif %}
+                {% if resources.has_next %}
+                    <div class="clearfix">
+                        <a class="btn btn-primary float-right mt-5 mb-5" href="?page={{ resources.next_page_number }}">
+                            <span>Older </span>
+                            <i class="fas fa-arrow-right" style="font-size: 20px; vertical-align: middle;"></i>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

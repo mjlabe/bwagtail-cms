@@ -20,6 +20,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
+DEBUG = True
 
 # Application definition
 
@@ -31,7 +32,8 @@ INSTALLED_APPS = [
     'bootstrap_business_casual',
     # 'bootstrap_common',
     # 'bwagtail',
-    'wag_custom.contrib.settings',
+    'wag_custom',
+    'bootstrap_blog',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'wagtail.core',
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.settings',
+    'wagtail.contrib.styleguide',
 
     'wagtailmenus',
     'modelcluster',
@@ -61,7 +64,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -107,9 +110,9 @@ WSGI_APPLICATION = 'bwagtail.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'wagtail',
-        'USER': 'wagtail',
-        'PASSWORD': 'wagtail',
+        'NAME': 'brc',
+        'USER': 'brc',
+        'PASSWORD': 'flaBRC123!',
         'HOST': '127.0.0.1',  # set in docker-compose.yml
         'PORT': 5432  # default postgres port
     }
@@ -166,11 +169,7 @@ STATICFILES_DIRS = [
 # See https://docs.djangoproject.com/en/2.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 
 # Wagtail settings

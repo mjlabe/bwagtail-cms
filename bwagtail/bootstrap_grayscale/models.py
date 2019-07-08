@@ -20,10 +20,12 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 from django import forms
 
 from bootstrap_common.models import *
+from bootstrap_blog.models import *
 
 
 class BootstrapGrayscaleMastheadBlock(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
+    heading_image = ImageChooserBlock(required=False)
     subheading = blocks.RichTextBlock(required=False)
     background_image = ImageChooserBlock()
     button_text = blocks.CharBlock(required=False)
@@ -51,6 +53,7 @@ class BootstrapGrayscaleMastheadBlock(blocks.StructBlock):
     class Meta:
         app_label = 'bootstrap_grayscale'
         template = 'bootstrap_grayscale/blocks/grayscale_masthead_block.html'
+        icon = 'title'
 
 
 class BootstrapGrayscaleAboutBlock(blocks.StructBlock):
@@ -116,12 +119,12 @@ class BootstrapGrayscaleSignupBlock(blocks.StructBlock):
 class BootstrapGrayscaleContactBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     paragraph = blocks.RichTextBlock(required=False)
-    address = blocks.TextBlock()
+    address = blocks.TextBlock(required=False)
     email = blocks.CharBlock()
-    phone = blocks.CharBlock()
+    phone = blocks.CharBlock(required=False)
     SOCIAL_MEDIA = (
         ('fab fa-facebook-f', 'Facebook'),
-        ('fa-instagram', 'Instagram'),
+        ('fab fa-instagram', 'Instagram'),
         ('fab fa-linkedin', 'LinkedIn'),
         ('fab fa-twitter', 'Twitter'),
         ('fab fa-pinterest', 'Pinterest'),
@@ -153,6 +156,40 @@ class BootstrapGrayscaleContactBlock(blocks.StructBlock):
         template = 'bootstrap_grayscale/blocks/grayscale_contact_block.html'
 
 
+class BootstrapGrayscalePostPage(BootstrapPostPage):
+    template = 'bootstrap_grayscale/bootstrap_grayscale_post_page.html'
+
+
+class BootstrapGrayscaleBlogPage(BootstrapBlogPage):
+    template = 'bootstrap_grayscale/bootstrap_grayscale_blog_page.html'
+    subpage_types = ['BootstrapGrayscalePostPage']
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(BootstrapGrayscaleBlogPage, self).get_context(request)
+
+        # Get the full unpaginated listing of resource pages as a queryset -
+        # replace this with your own query as appropriate
+        # limit to 1000 resources
+        all_resources = BootstrapGrayscalePostPage.objects.live().order_by('-first_published_at')[:1000]
+
+        paginator = Paginator(all_resources, 10)  # Show 10 resources per page
+
+        page = request.GET.get('page')
+        try:
+            resources = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            resources = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            resources = paginator.page(paginator.num_pages)
+
+        # make the variable 'resources' available on the template
+        context['resources'] = resources
+
+        return context
+
+
 class BootstrapGrayscalePage(Page):
     body = StreamField([
         ('masthead', BootstrapGrayscaleMastheadBlock()),
@@ -164,9 +201,11 @@ class BootstrapGrayscalePage(Page):
         ('contact', BootstrapGrayscaleContactBlock()),
         ('grid', BootstrapCommonGridRowBlock()),
         ('pricing', BootstrapCommonPriceRowBlock()),
-        ('paragraph', blocks.RichTextBlock()),
+        ('body', AlignedParagraphBlock()),
+        # ('body', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
     ])
+    show_in_menus_default = True
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('body'),
@@ -174,89 +213,4 @@ class BootstrapGrayscalePage(Page):
 
     seo_title = 'Bootstrap Grayscale Page'
 
-#
-# class Header(models.Model):
-#     site_settings = ParentalKey('SiteSettings', on_delete=models.CASCADE, related_name='header')
-#     site_name = models.CharField(max_length=50)
-#     site_logo = models.ForeignKey(
-#         'wagtailimages.Image',
-#         null=True,
-#         blank=True,
-#         on_delete=models.SET_NULL,
-#         related_name='+',
-#     )
-#     banner_colour = models.CharField(
-#         max_length=6,
-#         null=True,
-#         blank=True,
-#         help_text="Fill in a hex colour value"
-#     )
-#
-#     panels = [
-#         FieldPanel('site_name'),
-#         ImageChooserPanel('site_logo'),
-#         FieldPanel('banner_colour'),
-#     ]
-
-#
-# class Footer(Orderable):
-#     CONTACT_CHOICES = (
-#         ('fas fa-phone', 'Phone'),
-#         ('fas fa-envelope', 'Email'),
-#         ('fab fa-facebook-f', 'Facebook'),
-#         ('fa-instagram', 'Instagram'),
-#         ('fab fa-linkedin', 'LinkedIn'),
-#         ('fab fa-twitter', 'Twitter'),
-#         ('fab fa-pinterest', 'Pinterest'),
-#         ('fab fa-youtube', 'Youtube'),
-#         ('fab fa-github', 'GitHub'),
-#         ('fab fa-gitlab', 'GitLab'),
-#     )
-#
-#     site_settings = ParentalKey('SiteSettings', on_delete=models.CASCADE, related_name='footer')
-#     contact_type = models.CharField(choices=CONTACT_CHOICES, max_length=50)
-#     contact_info = models.CharField(max_length=50)
-#     info_prefix = models.CharField(max_length=10, editable=False)
-#
-#     def save(self, *args, **kwargs):
-#         if self.contact_type == 'Phone':
-#             self.info_prefix = 'tel:'
-#         elif self.contact_type == 'Email':
-#             self.info_prefix = 'mailto:'
-#         else:
-#             self.info_prefix = ''
-#
-#         super(Footer, self).save(*args, **kwargs)
-#
-#     panels = [
-#         FieldPanel('contact_type'),
-#         FieldPanel('contact_info'),
-#     ]
-#
-#
-# @register_setting
-# class SiteSettings(BaseSetting, ClusterableModel):
-#     site_name = models.CharField(max_length=50)
-#     site_logo = models.ForeignKey(
-#         'wagtailimages.Image',
-#         null=True,
-#         blank=True,
-#         on_delete=models.SET_NULL,
-#         related_name='+',
-#     )
-#     banner_color = models.CharField(
-#         max_length=6,
-#         null=True,
-#         blank=True,
-#         help_text="Fill in a hex colour value"
-#     )
-#     include_footer = models.BooleanField()
-#
-#     panels = [
-#         FieldPanel('site_name'),
-#         ImageChooserPanel('site_logo'),
-#         FieldPanel('banner_color'),
-#         FieldPanel('include_footer'),
-#         InlinePanel('footer', label="Footer",
-#                     help_text='Select your contact/social media type and enter the phone number, email, or URL')
-#     ]
+    subpage_types = ['BootstrapGrayscalePage', 'BootstrapGrayscaleBlogPage']
