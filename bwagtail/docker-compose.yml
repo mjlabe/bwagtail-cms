@@ -10,11 +10,15 @@ services:
     command: ["./docker_run.sh"] 
     depends_on:
      - db
+    volumes:
+    - ${USERDIR}/web/media/top:/code/media
   db:
     build:
       context: .
       dockerfile: './db/Dockerfile'
     container_name: wag_pg
     ports:
-     - "5432:5432"
+      - "5432:5432"
+    volumes:
+      - ${USERDIR}/web/postgres/top/data:/var/lib/postgresql/data
 
