@@ -1,0 +1,44 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+    {% image value.background_image original as backimage %}
+    {% image value.masthead_image original as mastimage %}
+
+    <style>
+        body{
+            background:-webkit-gradient(linear,left top,left bottom,from(rgba(47,23,15,.65))),url({{ backimage.url }});
+        }
+
+        .site-heading {
+            margin-top: 10rem;
+        }
+    </style>
+
+    <h1 class="site-heading text-center text-white d-none d-lg-block">
+      <span class="site-heading-upper text-primary mb-3">{{ value.heading }}</span>
+      <span class="site-heading-lower">{{ value.subheading }}</span>
+    </h1>
+
+    <section class="page-section clearfix">
+      <div class="container">
+        <div class="intro">
+          <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{{ mastimage.url }}" alt="">
+          <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+            <h2 class="section-heading mb-4">
+              <span class="section-heading-upper">{{ value.upper_text }}</span>
+              <span class="section-heading-lower">{{ value.lower_text }}</span>
+            </h2>
+            <p class="mb-3">{{ value.paragraph }}
+            </p>
+            <div class="intro-button mx-auto">
+              <a class="btn btn-primary btn-xl" href="{{ value.button_link }}">{{ value.button_text }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}

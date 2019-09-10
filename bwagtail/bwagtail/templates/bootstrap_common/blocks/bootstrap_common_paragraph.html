@@ -1,0 +1,27 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+
+    .rich-text {
+        padding: 1rem;
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    .rich-text img {
+        width: 100%;
+        height: unset;
+        margin: 2rem 0 2rem 0;
+    }
+
+</style>
+
+    <section class="{{ value.alignment }}">
+        {{value.paragraph}}
+    </section>
+
+{% endblock %}

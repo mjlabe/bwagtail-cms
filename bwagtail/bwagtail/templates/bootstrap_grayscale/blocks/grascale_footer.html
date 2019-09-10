@@ -1,0 +1,34 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% load static %}
+
+    <!-- Footer -->
+    <footer class="bg-black small text-center text-white-50">
+        <div class="social d-flex justify-content-center">
+
+        {% for block in value.social %}
+
+            {% if block.social_type == 'Phone' or 'Email' %}
+                <a href="{{ block.info_prefix }}{{ block.id_handle_contact }}" class="mx-2">
+                    <i class="{{ block.social_type }}"></i>
+                </a>
+            {% else %}
+                <a href="{{ block.info_prefix }}{{ block.social_url }}" class="mx-2">
+                    <i class="{{ block.social_type }}"></i>
+                </a>
+            {% endif %}
+        {% endfor %}
+
+        </div>
+
+        {% if value.copyright_name != '' %}
+            <div class="container">
+                {% now "Y" as current_year %}
+                Copyright &copy; {{ value.copyright_name }} {{ current_year }}
+            </div>
+        {% endif %}
+    </footer>
+
+{% endblock %}

@@ -1,0 +1,205 @@
+{% load static wagtailuserbar %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% load menu_tags %}
+
+{% load wagtailsettings_tags %}
+
+{% get_settings %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{{ page.title }}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'grayscale/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'grayscale/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'grayscale/css/grayscale.min.css' %} " rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <!-- Hack to fix Wagtail adding extra div in streamfield -->
+    <style>
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+        {#left: -.125rem;#} z-index: 1000;
+            display: none;
+            float: left;
+            min-width: 100%;
+            padding: .5rem 0;
+            margin: .125rem .125rem .125rem;
+            font-size: 1rem;
+            color: #212529;
+            text-align: left;
+            list-style: none;
+            background: rgba(235, 235, 235, 0.3);
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, .15);
+            border-radius: .25rem;
+        }
+
+        .dropdown-menu .nav-link {
+            padding-top: 0 !important;
+            padding-right: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        .show > a {
+            background: rgba(235, 235, 235, 0.3);
+        }
+
+        @media (min-width: 480px) {
+            .projects-section {
+                padding: 10rem 0;
+            }
+
+            .p-md-5 {
+                padding: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .projects-section {
+                padding: 5rem 0;
+            }
+
+            .p-md-5 {
+                padding: 1rem;
+            }
+        }
+
+        .btn {
+            min-width: 150px;
+        }
+
+        .bg-primary {
+            background-color: #29423d;
+        }
+
+        .navbar {
+            padding: 0 1rem;
+        }
+
+        #mainNav .navbar-toggler {
+            font-size: 150%;
+            border: none;
+        }
+
+        #mainNav .navbar-brand {
+            padding: 0.5rem;
+        }
+
+        #mainNav.navbar-shrink {
+            border-bottom: 1px solid lightgrey
+        }
+
+        @media (max-width: 991px) {
+            #mainNav {
+                border-bottom: 1px solid lightgrey;
+            }
+        }
+
+    </style>
+
+    {% if settings.sitesettings.SiteSettings.google_analytics_id %}
+        {% with settings.wag_custom.SiteSettings.google_analytics_id as ga_id %}
+            <!-- Global Site Tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_id }}"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', '{{ ga_id }}');
+            </script>
+        {% endwith %}
+    {% endif %}
+
+</head>
+
+<body id="page-top">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+
+        {% image settings.wag_custom.SiteSettings.site_logo original as site_logo %}
+
+        {% if site_logo %}
+                <a class="navbar-brand js-scroll-trigger" href="/">
+                    <img src="{{ site_logo.url }}" style="max-height: 40px;">
+                </a>
+        {% elif settings.wag_custom.SiteSettings.site_name %}
+            {% with settings.wag_custom.SiteSettings.site_name as name %}
+                <a class="navbar-brand js-scroll-trigger" href="/">{{ name }}</a>
+            {% endwith %}
+        {% else %}
+            <a class="navbar-brand js-scroll-trigger" href="/">{{ request.site.site_name }}</a>
+        {% endif %}
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            {% main_menu template="bootstrap_grayscale/menus/main_menu_dropdown.html" %}
+        </div>
+    </div>
+</nav>
+
+{% wagtailuserbar %}
+
+{% block content %}{% endblock %}
+
+{# Global javascript #}
+<script type="text/javascript" src="{% static 'js/bwagtail.js' %}"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'grayscale/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'grayscale/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+{#    <!-- Plugin JavaScript -->#}
+<script src="{% static 'grayscale/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{% static 'grayscale/js/grayscale.min.js' %}"></script>
+
+{% if settings.wag_custom.SiteSettings.google_analytics_id %}
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ settings.wag_custom.SiteSettings.google_analytics_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '{{ settings.wag_custom.SiteSettings.google_analytics_id }}');
+    </script>
+{% endif %}
+
+
+{% block extra_js %}
+    {# Override this in templates to add extra javascript #}
+{% endblock %}
+
+</body>
+
+</html>
